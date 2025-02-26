@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Sensson\Moneybird\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MoneybirdCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-moneybird';
 
     public $description = 'My command';
 
