@@ -2,9 +2,9 @@
 
 namespace Sensson\Moneybird;
 
+use Sensson\Moneybird\Commands\MoneybirdCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Sensson\Moneybird\Commands\MoneybirdCommand;
 
 class MoneybirdServiceProvider extends PackageServiceProvider
 {
