@@ -8,6 +8,20 @@ test('connector has correct base url', function () {
     expect($connector->resolveBaseUrl())->toBe('https://moneybird.com/api/v2');
 });
 
+test('connector base url includes administration id when set', function () {
+    $administrationId = '123456';
+    $connector = new MoneybirdConnector;
+    $connector->administration($administrationId);
+
+    expect($connector->resolveBaseUrl())->toBe("https://moneybird.com/api/v2/{$administrationId}");
+});
+
+test('connector for administration method returns self for chaining', function () {
+    $connector = new MoneybirdConnector;
+
+    expect($connector->administration('123456'))->toBe($connector);
+});
+
 test('connector accepts json by default', function () {
     $connector = new MoneybirdConnector;
 

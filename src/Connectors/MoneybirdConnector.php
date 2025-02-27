@@ -3,6 +3,7 @@
 namespace Sensson\Moneybird\Connectors;
 
 use Saloon\Http\Connector;
+use Saloon\Traits\Conditionable;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Sensson\Moneybird\Resources\AdministratorResource;
@@ -12,10 +13,32 @@ class MoneybirdConnector extends Connector
 {
     use AcceptsJson;
     use AlwaysThrowOnErrors;
+    use Conditionable;
+
+    /**
+     * The administration ID to use for API requests
+     */
+    protected ?string $administrationId = null;
 
     public function resolveBaseUrl(): string
     {
-        return 'https://moneybird.com/api/v2';
+        $baseUrl = 'https://moneybird.com/api/v2';
+
+        if ($this->administrationId) {
+            return "{$baseUrl}/{$this->administrationId}";
+        }
+
+        return $baseUrl;
+    }
+
+    /**
+     * Set the administration ID to use for API requests
+     */
+    public function administration(string $administrationId): self
+    {
+        $this->administrationId = $administrationId;
+
+        return $this;
     }
 
     public function administrations(): AdministratorResource
