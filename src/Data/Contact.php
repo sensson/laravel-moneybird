@@ -2,7 +2,10 @@
 
 namespace Sensson\Moneybird\Data;
 
+use Sensson\Moneybird\Enums\DeliveryMethod;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 
 class Contact extends Data
@@ -19,7 +22,8 @@ class Contact extends Data
         public ?string $city = null,
         public ?string $country = null,
         public ?string $phone = null,
-        public string $delivery_method = '',
+        #[WithCast(EnumCast::class, type: DeliveryMethod::class)]
+        public DeliveryMethod $delivery_method = DeliveryMethod::Email,
         public ?string $customer_id = null,
         public ?string $tax_number = null,
         public ?string $chamber_of_commerce = null,

@@ -16,7 +16,6 @@ test('list administrations request uses GET method', function () {
 });
 
 test('list administrations request returns data collection of administrations', function () {
-    // Create mock data
     $mockData = [
         [
             'id' => '123456',
@@ -38,24 +37,16 @@ test('list administrations request returns data collection of administrations', 
         ],
     ];
 
-    // Create a mock client that will intercept requests
     $mockClient = new MockClient([
         ListAdministrations::class => MockResponse::make($mockData, 200),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
-
-    // Make the request
-    $request = new ListAdministrations;
-    $response = $connector->send($request);
-
-    // Check that we sent the intended request
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $response = $connector->send(new ListAdministrations);
     $mockClient->assertSent(ListAdministrations::class);
 
-    // Verify the response data
-    $collection = collect($request->createDtoFromResponse($response));
+    $collection = collect($response->dto());
+
     expect($collection)->toHaveCount(2)
         ->and($collection->first())->toBeInstanceOf(Administration::class)
         ->and($collection->first()->id)->toBe('123456')

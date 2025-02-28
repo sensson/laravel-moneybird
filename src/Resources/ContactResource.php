@@ -7,6 +7,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\Contact;
+use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 
@@ -45,5 +46,13 @@ class ContactResource extends BaseResource
     public function get(string $id): Contact
     {
         return $this->connector->send(new GetContact($id))->dtoOrFail();
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function create(Contact $contact): Contact
+    {
+        return $this->connector->send(new CreateContact($contact))->dtoOrFail();
     }
 }

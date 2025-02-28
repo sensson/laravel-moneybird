@@ -8,17 +8,21 @@ use Sensson\Moneybird\Data\Administration;
 use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 
 test('get administration request has correct endpoint', function () {
-    expect((new GetAdministration('123456'))->resolveEndpoint())->toBe('administrations/123456.json');
+    $administrationId = '123456';
+    $endpoint = (new GetAdministration($administrationId))->resolveEndpoint();
+
+    expect($endpoint)->toBe('administrations/123456.json');
 });
 
 test('get administration request uses GET method', function () {
-    expect((new GetAdministration('123456'))->getMethod())->toBe(Method::GET);
+    $method = (new GetAdministration('123456'))->getMethod();
+
+    expect($method)->toBe(Method::GET);
 });
 
-test('get administration request returns administration dto', function () {
-    $administrationId = '123456';
+it('gets an administration', function () {
     $mockData = [
-        'id' => $administrationId,
+        'id' => '12345',
         'name' => 'My Administration',
         'language' => 'en',
         'currency' => 'EUR',
@@ -27,26 +31,18 @@ test('get administration request returns administration dto', function () {
         'access' => true,
     ];
 
-    // Create a mock client that will intercept requests
     $mockClient = new MockClient([
-        GetAdministration::class => MockResponse::make($mockData, 200),
+        GetAdministration::class => MockResponse::make($mockData),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
-
-    // Make the request
-    $request = new GetAdministration($administrationId);
-    $response = $connector->send($request);
-
-    // Check that we sent the intended request
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $response = $connector->send(new GetAdministration('12345'));
     $mockClient->assertSent(GetAdministration::class);
 
-    // Verify the response data
-    $administration = $request->createDtoFromResponse($response);
+    $administration = $response->dto();
+
     expect($administration)->toBeInstanceOf(Administration::class)
-        ->and($administration->id)->toBe($administrationId)
+        ->and($administration->id)->toBe('12345')
         ->and($administration->name)->toBe('My Administration')
         ->and($administration->language)->toBe('en')
         ->and($administration->currency)->toBe('EUR')

@@ -26,6 +26,6 @@ class GetContact extends Request
      */
     public function createDtoFromResponse(Response $response): Contact
     {
-        return new Contact(...$response->json());
+        return Contact::from($response->json());
     }
 }

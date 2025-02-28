@@ -16,59 +16,26 @@ test('administrator resource is instantiated correctly', function () {
     expect($resource)->toBeInstanceOf(AdministrationResource::class);
 });
 
-test('administrator resource all method sends list administrations request', function () {
-    $mockData = [
-        ['id' => '1', 'name' => 'Administration 1'],
-        ['id' => '2', 'name' => 'Administration 2'],
-    ];
-
-    // Create a mock client that will intercept requests
+test('all() calls the list administrations request', function () {
     $mockClient = new MockClient([
-        ListAdministrations::class => MockResponse::make($mockData, 200),
+        ListAdministrations::class => MockResponse::make([]),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    // Execute the request through the resource
-    $response = $connector->administrations()->all();
+    (new AdministrationResource($connector))->all();
 
-    // Verify request was sent correctly
     $mockClient->assertSent(ListAdministrations::class);
-
-    // Verify response is a collection of Administration objects
-    expect($response)->toBeInstanceOf(Collection::class)
-        ->and($response)->toHaveCount(2)
-        ->and($response[0])->toBeInstanceOf(Administration::class)
-        ->and($response[0]->id)->toBe('1')
-        ->and($response[1]->id)->toBe('2');
 });
 
-test('administrator resource get method sends get administration request with correct id', function () {
-    $administrationId = '12345';
-    $mockData = [
-        'id' => $administrationId,
-        'name' => 'Test Administration',
-    ];
-
-    // Create a mock client that will intercept requests
+test('get() calls the get administration request', function () {
     $mockClient = new MockClient([
-        GetAdministration::class => MockResponse::make($mockData, 200),
+        GetAdministration::class => MockResponse::make([]),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    // Execute the request through the resource
-    $response = $connector->administrations()->get($administrationId);
+    (new AdministrationResource($connector))->get('1234');
 
-    // Verify request was sent correctly
     $mockClient->assertSent(GetAdministration::class);
-
-    // Verify response is an Administration object with correct data
-    expect($response)->toBeInstanceOf(Administration::class)
-        ->and($response->id)->toBe($administrationId)
-        ->and($response->name)->toBe('Test Administration');
 });

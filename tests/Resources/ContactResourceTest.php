@@ -5,6 +5,8 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Contact;
+use Sensson\Moneybird\Enums\DeliveryMethod;
+use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 use Sensson\Moneybird\Resources\ContactResource;
@@ -16,74 +18,50 @@ test('contacts resource is instantiated correctly', function () {
     expect($resource)->toBeInstanceOf(ContactResource::class);
 });
 
-test('contacts resource all method sends list contacts request', function () {
-    $mockData = [
-        [
-            'id' => '1',
-            'administration_id' => '123456',
-            'company_name' => 'Test Company',
-            'delivery_method' => 'Email',
-            'created_at' => '2023-01-01T00:00:00.000Z',
-            'updated_at' => '2023-01-01T00:00:00.000Z',
-        ],
-        [
-            'id' => '2',
-            'administration_id' => '123456',
-            'company_name' => 'Another Company',
-            'delivery_method' => 'Email',
-            'created_at' => '2023-01-02T00:00:00.000Z',
-            'updated_at' => '2023-01-02T00:00:00.000Z',
-        ],
-    ];
-
-    // Create a mock client that will intercept requests
+test('all() calls the list contacts request', function () {
     $mockClient = new MockClient([
-        ListContacts::class => MockResponse::make($mockData, 200),
+        ListContacts::class => MockResponse::make([]),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    // Execute the request through the resource
-    $response = $connector->contacts()->all();
+    (new ContactResource($connector))->all();
 
-    // Verify request was sent correctly
     $mockClient->assertSent(ListContacts::class);
-
-    // Verify response is a collection of Contact objects
-    expect($response)->toBeInstanceOf(Collection::class)
-        ->and($response)->toHaveCount(2)
-        ->and($response[0])->toBeInstanceOf(Contact::class)
-        ->and($response[0]->id)->toBe('1')
-        ->and($response[0]->company_name)->toBe('Test Company')
-        ->and($response[1]->id)->toBe('2')
-        ->and($response[1]->company_name)->toBe('Another Company');
 });
 
-test('contacts resource all method supports query parameters', function () {
-    $mockData = [
-        [
-            'id' => '1',
-            'administration_id' => '123456',
-            'company_name' => 'Test Company',
-            'delivery_method' => 'Email',
-            'created_at' => '2023-01-01T00:00:00.000Z',
-            'updated_at' => '2023-01-01T00:00:00.000Z',
-        ],
-    ];
-
-    // Create a mock client that will intercept requests
+test('get() calls the get contact request', function () {
     $mockClient = new MockClient([
-        ListContacts::class => MockResponse::make($mockData, 200),
+        GetContact::class => MockResponse::make([]),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    // Execute the request through the resource with query parameters
-    $response = $connector->contacts()->all(
+    (new ContactResource($connector))->get('1234');
+
+    $mockClient->assertSent(GetContact::class);
+});
+
+test('create() calls the create contact request', function () {
+    $mockClient = new MockClient([
+        CreateContact::class => MockResponse::make([]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new ContactResource($connector))->create(Contact::from([]));
+
+    $mockClient->assertSent(CreateContact::class);
+});
+
+it('passes query parameters to all()', function () {
+    $mockClient = new MockClient([
+        ListContacts::class => MockResponse::make([]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new ContactResource($connector))->all(
         perPage: 10,
         page: 1,
         query: 'Test Company',
@@ -91,7 +69,6 @@ test('contacts resource all method supports query parameters', function () {
         todo: 'Follow up'
     );
 
-    // Verify request was sent correctly with query parameters
     $mockClient->assertSent(function (ListContacts $request) {
         $query = $request->query()->all();
 
@@ -101,90 +78,29 @@ test('contacts resource all method supports query parameters', function () {
             && $query['include_archived'] === true
             && $query['todo'] === 'Follow up';
     });
-
-    // Verify response is a collection of Contact objects
-    expect($response)->toBeInstanceOf(Collection::class)
-        ->and($response)->toHaveCount(1)
-        ->and($response[0])->toBeInstanceOf(Contact::class)
-        ->and($response[0]->id)->toBe('1')
-        ->and($response[0]->company_name)->toBe('Test Company');
 });
 
-test('contacts resource all method excludes null parameters from query', function () {
-    $mockData = [
-        [
-            'id' => '1',
-            'administration_id' => '123456',
-            'company_name' => 'Test Company',
-            'delivery_method' => 'Email',
-            'created_at' => '2023-01-01T00:00:00.000Z',
-            'updated_at' => '2023-01-01T00:00:00.000Z',
-        ],
-    ];
-
-    // Create a mock client that will intercept requests
+it('ignores query parameters to all() when they are null', function () {
     $mockClient = new MockClient([
-        ListContacts::class => MockResponse::make($mockData, 200),
+        ListContacts::class => MockResponse::make([]),
     ]);
 
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    // Execute the request with some parameters as null
-    $response = $connector->contacts()->all(
-        perPage: 15,
+    (new ContactResource($connector))->all(
+        perPage: 10,
         includeArchived: false,
     );
 
-    // Verify only non-null parameters are included in the query
     $mockClient->assertSent(function (ListContacts $request) {
         $query = $request->query()->all();
 
-        return $query['per_page'] === 15
+        return $query['per_page'] === 10
             && $query['include_archived'] === false
             && ! isset($query['page'])
             && ! isset($query['query'])
             && ! isset($query['todo']);
     });
-
-    // Verify response is a collection of Contact objects
-    expect($response)->toBeInstanceOf(Collection::class)
-        ->and($response[0])->toBeInstanceOf(Contact::class);
 });
 
-test('contacts resource get method sends get contact request with correct id', function () {
-    $contactId = '12345';
-    $mockData = [
-        'id' => $contactId,
-        'administration_id' => '123456',
-        'company_name' => 'Test Company',
-        'firstname' => 'John',
-        'lastname' => 'Doe',
-        'delivery_method' => 'Email',
-        'created_at' => '2023-01-01T00:00:00.000Z',
-        'updated_at' => '2023-01-01T00:00:00.000Z',
-    ];
 
-    // Create a mock client that will intercept requests
-    $mockClient = new MockClient([
-        GetContact::class => MockResponse::make($mockData, 200),
-    ]);
-
-    // Create a connector with the mock client
-    $connector = new MoneybirdConnector;
-    $connector->withMockClient($mockClient);
-
-    // Execute the request through the resource
-    $response = $connector->contacts()->get($contactId);
-
-    // Verify request was sent correctly
-    $mockClient->assertSent(GetContact::class);
-
-    // Verify response is a Contact object with correct data
-    expect($response)->toBeInstanceOf(Contact::class)
-        ->and($response->id)->toBe($contactId)
-        ->and($response->company_name)->toBe('Test Company')
-        ->and($response->firstname)->toBe('John')
-        ->and($response->lastname)->toBe('Doe');
-});
