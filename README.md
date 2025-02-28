@@ -41,7 +41,7 @@ session()->put('moneybird.state', $moneybird->getState());
 return redirect()->to($url);
 ```
 
-And retrieve the callback from Moneybird:
+And process the callback from Moneybird:
 
 ```php
 $code = $request->string('code');
@@ -50,7 +50,11 @@ $expected = session()->pull('moneybird.state');
 
 $moneybird = \Sensson\Moneybird\Facades\Moneybird::auth();
 $authorization = $moneybird->getAccessToken($code, $state, $expected);
+
+// Store the $authorization details with a user or team
 ```
+
+Both would typically be done in a custom controller.
 
 ## Testing
 
