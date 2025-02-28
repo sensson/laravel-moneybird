@@ -1,11 +1,9 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Contact;
-use Sensson\Moneybird\Enums\DeliveryMethod;
 use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
@@ -102,5 +100,3 @@ it('ignores query parameters to all() when they are null', function () {
             && ! isset($query['todo']);
     });
 });
-
-

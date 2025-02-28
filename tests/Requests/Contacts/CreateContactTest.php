@@ -23,7 +23,7 @@ it('creates a contact', function () {
             ...$contact->toArray(),
             'id' => '1',
             'administration_id' => '123456789',
-        ])
+        ]),
     ]);
 
     $connector = (new MoneybirdConnector)->withMockClient($mockClient);

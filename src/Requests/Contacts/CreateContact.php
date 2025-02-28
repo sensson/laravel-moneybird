@@ -23,7 +23,7 @@ class CreateContact extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return "contacts.json";
+        return 'contacts.json';
     }
 
     protected function defaultBody(): array
