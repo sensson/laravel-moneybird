@@ -9,8 +9,8 @@ use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 class AuthConnector extends Connector
 {
-    use AuthorizationCodeGrant;
     use AlwaysThrowOnErrors;
+    use AuthorizationCodeGrant;
 
     public function resolveBaseUrl(): string
     {

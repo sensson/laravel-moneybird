@@ -8,12 +8,6 @@ class MoneybirdAuth
 {
     /**
      * Cast the given value.
-     *
-     * @param $model
-     * @param string $key
-     * @param $value
-     * @param array $attributes
-     * @return ?AccessTokenAuthenticator
      */
     public function get($model, string $key, $value, array $attributes): ?AccessTokenAuthenticator
     {
@@ -26,12 +20,6 @@ class MoneybirdAuth
 
     /**
      * Prepare the given value for storage.
-     *
-     * @param $model
-     * @param string $key
-     * @param $value
-     * @param array $attributes
-     * @return mixed
      */
     public function set($model, string $key, $value, array $attributes): mixed
     {

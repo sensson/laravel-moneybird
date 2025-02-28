@@ -40,20 +40,20 @@ test('list administrations request returns data collection of administrations', 
 
     // Create a mock client that will intercept requests
     $mockClient = new MockClient([
-        ListAdministrations::class => MockResponse::make($mockData, 200)
+        ListAdministrations::class => MockResponse::make($mockData, 200),
     ]);
 
     // Create a connector with the mock client
-    $connector = new MoneybirdConnector();
+    $connector = new MoneybirdConnector;
     $connector->withMockClient($mockClient);
 
     // Make the request
-    $request = new ListAdministrations();
+    $request = new ListAdministrations;
     $response = $connector->send($request);
-    
+
     // Check that we sent the intended request
     $mockClient->assertSent(ListAdministrations::class);
-    
+
     // Verify the response data
     $collection = collect($request->createDtoFromResponse($response));
     expect($collection)->toHaveCount(2)

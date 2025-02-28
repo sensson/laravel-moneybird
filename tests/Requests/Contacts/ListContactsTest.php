@@ -40,20 +40,20 @@ test('list contacts request returns data collection of contacts', function () {
 
     // Create a mock client that will intercept requests
     $mockClient = new MockClient([
-        ListContacts::class => MockResponse::make($mockData, 200)
+        ListContacts::class => MockResponse::make($mockData, 200),
     ]);
 
     // Create a connector with the mock client
-    $connector = new MoneybirdConnector();
+    $connector = new MoneybirdConnector;
     $connector->withMockClient($mockClient);
 
     // Make the request
-    $request = new ListContacts();
+    $request = new ListContacts;
     $response = $connector->send($request);
-    
+
     // Check that we sent the intended request
     $mockClient->assertSent(ListContacts::class);
-    
+
     // Verify the response data
     $collection = collect($request->createDtoFromResponse($response));
     expect($collection)->toHaveCount(2)

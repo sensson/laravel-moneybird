@@ -15,9 +15,6 @@ class MoneybirdConnector extends Connector
     use AlwaysThrowOnErrors;
     use Conditionable;
 
-    /**
-     * The administration ID to use for API requests
-     */
     protected ?string $administrationId = null;
 
     public function resolveBaseUrl(): string
@@ -31,9 +28,6 @@ class MoneybirdConnector extends Connector
         return $baseUrl;
     }
 
-    /**
-     * Set the administration ID to use for API requests
-     */
     public function administration(string $administrationId): self
     {
         $this->administrationId = $administrationId;

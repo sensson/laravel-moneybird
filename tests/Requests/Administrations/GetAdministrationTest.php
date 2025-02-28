@@ -33,16 +33,16 @@ test('get administration request returns administration dto', function () {
     ]);
 
     // Create a connector with the mock client
-    $connector = new MoneybirdConnector();
+    $connector = new MoneybirdConnector;
     $connector->withMockClient($mockClient);
 
     // Make the request
     $request = new GetAdministration($administrationId);
     $response = $connector->send($request);
-    
+
     // Check that we sent the intended request
     $mockClient->assertSent(GetAdministration::class);
-    
+
     // Verify the response data
     $administration = $request->createDtoFromResponse($response);
     expect($administration)->toBeInstanceOf(Administration::class)

@@ -2,30 +2,31 @@
 
 namespace Sensson\Moneybird\Resources;
 
+use Illuminate\Support\Collection;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
+use Sensson\Moneybird\Data\Administration;
 use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
 
 class AdministratorResource extends BaseResource
 {
     /**
-     * @throws FatalRequestException
-     * @throws RequestException
+     * @throws RequestException|FatalRequestException
+     * @return Collection<Administration>
      */
-    public function all(): Response
+    public function all(): Collection
     {
-        return $this->connector->send(new ListAdministrations());
+        return collect($this->connector->send(new ListAdministrations)->dtoOrFail());
     }
 
     /**
-     * @throws FatalRequestException
-     * @throws RequestException
+     * @throws RequestException|FatalRequestException
      */
-    public function get(string $id): Response
+    public function get(string $id): Administration
     {
-        return $this->connector->send(new GetAdministration($id));
+        return $this->connector->send(new GetAdministration($id))->dtoOrFail();
     }
 }

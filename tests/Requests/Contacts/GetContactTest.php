@@ -35,16 +35,16 @@ test('get contact request returns contact data object', function () {
     ]);
 
     // Create a connector with the mock client
-    $connector = new MoneybirdConnector();
+    $connector = new MoneybirdConnector;
     $connector->withMockClient($mockClient);
 
     // Make the request
     $request = new GetContact($contactId);
     $response = $connector->send($request);
-    
+
     // Check that we sent the intended request and got the right response
     $mockClient->assertSent(GetContact::class);
-    
+
     // Verify the response data
     $contact = $request->createDtoFromResponse($response);
     expect($contact)
