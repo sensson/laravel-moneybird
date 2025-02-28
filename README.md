@@ -25,8 +25,31 @@ php artisan vendor:publish --tag="laravel-moneybird-config"
 ## Usage
 
 ```php
-$connector = new Sensson\Moneybird\Connectors\MoneybirdConnector;
-echo $connector->administration('id')->contacts()->all();
+\Sensson\Moneybird\Facades\Moneybird::administration('id')->contacts()->all();
+```
+
+### Authentication / OAuth2
+
+You can use OAuth2 to authorize your application with Moneybird.
+
+```php
+$moneybird = \Sensson\Moneybird\Facades\Moneybird::auth();
+$url = $moneybird->getAuthorizationUrl();
+
+session()->put('moneybird.state', $moneybird->getState());
+
+return redirect()->to($url);
+```
+
+And retrieve the callback from Moneybird:
+
+```php
+$code = $request->string('code');
+$state = $request->string('state');
+$expected = session()->pull('moneybird.state');
+
+$moneybird = \Sensson\Moneybird\Facades\Moneybird::auth();
+$authorization = $moneybird->getAccessToken($code, $state, $expected);
 ```
 
 ## Testing
