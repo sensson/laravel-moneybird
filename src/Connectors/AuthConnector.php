@@ -23,6 +23,7 @@ class AuthConnector extends Connector
             ->setClientId(config('moneybird.oauth.client_id'))
             ->setClientSecret(config('moneybird.oauth.client_secret'))
             ->setRedirectUri(config('moneybird.oauth.redirect_uri'))
+            ->setDefaultScopes(config('moneybird.oauth.scopes'))
             ->setAuthorizeEndpoint('authorize')
             ->setTokenEndpoint('token');
     }
