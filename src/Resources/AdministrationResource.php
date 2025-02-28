@@ -10,7 +10,7 @@ use Sensson\Moneybird\Data\Administration;
 use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
 
-class AdministratorResource extends BaseResource
+class AdministrationResource extends BaseResource
 {
     /**
      * @return Collection<Administration>

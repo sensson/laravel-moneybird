@@ -7,13 +7,13 @@ use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Administration;
 use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
-use Sensson\Moneybird\Resources\AdministratorResource;
+use Sensson\Moneybird\Resources\AdministrationResource;
 
 test('administrator resource is instantiated correctly', function () {
     $connector = new MoneybirdConnector;
     $resource = $connector->administrations();
 
-    expect($resource)->toBeInstanceOf(AdministratorResource::class);
+    expect($resource)->toBeInstanceOf(AdministrationResource::class);
 });
 
 test('administrator resource all method sends list administrations request', function () {

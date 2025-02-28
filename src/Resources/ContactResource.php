@@ -10,7 +10,7 @@ use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 
-class ContactsResource extends BaseResource
+class ContactResource extends BaseResource
 {
     /**
      * @return Collection<Contact>

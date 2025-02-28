@@ -7,13 +7,13 @@ use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
-use Sensson\Moneybird\Resources\ContactsResource;
+use Sensson\Moneybird\Resources\ContactResource;
 
 test('contacts resource is instantiated correctly', function () {
     $connector = new MoneybirdConnector;
     $resource = $connector->contacts();
 
-    expect($resource)->toBeInstanceOf(ContactsResource::class);
+    expect($resource)->toBeInstanceOf(ContactResource::class);
 });
 
 test('contacts resource all method sends list contacts request', function () {

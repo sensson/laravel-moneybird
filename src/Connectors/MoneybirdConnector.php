@@ -10,8 +10,8 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Conditionable;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
-use Sensson\Moneybird\Resources\AdministratorResource;
-use Sensson\Moneybird\Resources\ContactsResource;
+use Sensson\Moneybird\Resources\AdministrationResource;
+use Sensson\Moneybird\Resources\ContactResource;
 
 class MoneybirdConnector extends Connector
 {
@@ -52,13 +52,13 @@ class MoneybirdConnector extends Connector
         return $this;
     }
 
-    public function administrations(): AdministratorResource
+    public function administrations(): AdministrationResource
     {
-        return new AdministratorResource($this);
+        return new AdministrationResource($this);
     }
 
-    public function contacts(): ContactsResource
+    public function contacts(): ContactResource
     {
-        return new ContactsResource($this);
+        return new ContactResource($this);
     }
 }
