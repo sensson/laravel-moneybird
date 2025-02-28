@@ -3,6 +3,10 @@
 namespace Sensson\Moneybird\Connectors;
 
 use Saloon\Http\Connector;
+use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
+use Saloon\RateLimitPlugin\Limit;
+use Saloon\RateLimitPlugin\Stores\MemoryStore;
+use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Conditionable;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
@@ -14,6 +18,7 @@ class MoneybirdConnector extends Connector
     use AcceptsJson;
     use AlwaysThrowOnErrors;
     use Conditionable;
+    use HasRateLimits;
 
     protected ?string $administrationId = null;
 
@@ -26,6 +31,18 @@ class MoneybirdConnector extends Connector
         }
 
         return $baseUrl;
+    }
+
+    protected function resolveLimits(): array
+    {
+        return [
+            Limit::allow(150)->everyFiveMinutes(),
+        ];
+    }
+
+    protected function resolveRateLimitStore(): RateLimitStore
+    {
+        return new MemoryStore;
     }
 
     public function administration(string $administrationId): self
