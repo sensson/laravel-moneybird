@@ -147,7 +147,7 @@ test('contacts resource all method excludes null parameters from query', functio
             && ! isset($query['query'])
             && ! isset($query['todo']);
     });
-    
+
     // Verify response is a collection of Contact objects
     expect($response)->toBeInstanceOf(Collection::class)
         ->and($response[0])->toBeInstanceOf(Contact::class);
