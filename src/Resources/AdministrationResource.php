@@ -7,7 +7,6 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\Administration;
-use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
 
 class AdministrationResource extends BaseResource

@@ -3,7 +3,6 @@
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
-use Sensson\Moneybird\Requests\Administrations\GetAdministration;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
 use Sensson\Moneybird\Resources\AdministrationResource;
 
