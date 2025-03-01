@@ -6,6 +6,7 @@ use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Ledger;
 use Sensson\Moneybird\Enums\AccountType;
 use Sensson\Moneybird\Requests\Ledgers\CreateLedger;
+use Sensson\Moneybird\Requests\Ledgers\DeleteLedger;
 use Sensson\Moneybird\Requests\Ledgers\ListLedgers;
 use Sensson\Moneybird\Requests\Ledgers\UpdateLedger;
 use Sensson\Moneybird\Resources\LedgerResource;
@@ -68,4 +69,16 @@ test('update() calls the update ledger request', function () {
     (new LedgerResource($connector))->update('123456', $ledger, 'test-code');
 
     $mockClient->assertSent(UpdateLedger::class);
+});
+
+test('delete() calls the delete ledger request', function () {
+    $mockClient = new MockClient([
+        DeleteLedger::class => MockResponse::make([], 204),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new LedgerResource($connector))->delete('123456');
+
+    $mockClient->assertSent(DeleteLedger::class);
 });

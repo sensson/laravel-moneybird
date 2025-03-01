@@ -8,6 +8,7 @@ use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\Ledger;
 use Sensson\Moneybird\Requests\Ledgers\CreateLedger;
+use Sensson\Moneybird\Requests\Ledgers\DeleteLedger;
 use Sensson\Moneybird\Requests\Ledgers\ListLedgers;
 use Sensson\Moneybird\Requests\Ledgers\UpdateLedger;
 
@@ -43,5 +44,15 @@ class LedgerResource extends BaseResource
         $request = new UpdateLedger($id, $ledger, $rgs_code);
 
         return $this->connector->send($request)->dtoOrFail();
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function delete(string $id): void
+    {
+        $request = new DeleteLedger($id);
+
+        $this->connector->send($request);
     }
 }
