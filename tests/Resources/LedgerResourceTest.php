@@ -7,6 +7,7 @@ use Sensson\Moneybird\Data\Ledger;
 use Sensson\Moneybird\Enums\AccountType;
 use Sensson\Moneybird\Requests\Ledgers\CreateLedger;
 use Sensson\Moneybird\Requests\Ledgers\ListLedgers;
+use Sensson\Moneybird\Requests\Ledgers\UpdateLedger;
 use Sensson\Moneybird\Resources\LedgerResource;
 
 test('ledger resource is instantiated correctly', function () {
@@ -46,4 +47,25 @@ test('create() calls the create ledger request', function () {
     (new LedgerResource($connector))->create($ledger, 'test-code');
 
     $mockClient->assertSent(CreateLedger::class);
+});
+
+test('update() calls the update ledger request', function () {
+    $mockClient = new MockClient([
+        UpdateLedger::class => MockResponse::make([
+            'id' => '123456',
+            'name' => 'Updated Ledger',
+            'account_type' => AccountType::Expenses,
+        ]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    $ledger = Ledger::from([
+        'name' => 'Updated Ledger',
+        'account_type' => AccountType::Expenses,
+    ]);
+
+    (new LedgerResource($connector))->update('123456', $ledger, 'test-code');
+
+    $mockClient->assertSent(UpdateLedger::class);
 });
