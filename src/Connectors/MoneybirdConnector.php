@@ -12,6 +12,7 @@ use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
+use Sensson\Moneybird\Resources\LedgerResource;
 
 class MoneybirdConnector extends Connector
 {
@@ -60,5 +61,10 @@ class MoneybirdConnector extends Connector
     public function contacts(): ContactResource
     {
         return new ContactResource($this);
+    }
+
+    public function ledgers(): LedgerResource
+    {
+        return new LedgerResource($this);
     }
 }
