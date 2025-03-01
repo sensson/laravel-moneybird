@@ -21,12 +21,4 @@ class AdministrationResource extends BaseResource
     {
         return collect($this->connector->send(new ListAdministrations)->dtoOrFail());
     }
-
-    /**
-     * @throws RequestException|FatalRequestException
-     */
-    public function get(string $id): Administration
-    {
-        return $this->connector->send(new GetAdministration($id))->dtoOrFail();
-    }
 }

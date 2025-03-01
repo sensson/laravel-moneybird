@@ -25,15 +25,3 @@ test('all() calls the list administrations request', function () {
 
     $mockClient->assertSent(ListAdministrations::class);
 });
-
-test('get() calls the get administration request', function () {
-    $mockClient = new MockClient([
-        GetAdministration::class => MockResponse::make([]),
-    ]);
-
-    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
-
-    (new AdministrationResource($connector))->get('1234');
-
-    $mockClient->assertSent(GetAdministration::class);
-});
