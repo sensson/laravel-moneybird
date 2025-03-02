@@ -12,9 +12,10 @@ class GetContact extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(
-        protected string $id,
-    ) {}
+    public function __construct(protected string $id)
+    {
+        //
+    }
 
     public function resolveEndpoint(): string
     {
