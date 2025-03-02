@@ -6,7 +6,6 @@ use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Data\Ledger;
 
 class GetLedger extends Request
