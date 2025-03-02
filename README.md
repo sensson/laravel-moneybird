@@ -54,7 +54,19 @@ $authorization = $moneybird->getAccessToken($code, $state, $expected);
 // Store the $authorization details with a user or team
 ```
 
-Both would typically be done in a custom controller.
+Both would typically be done in a custom controller. You can use the 
+`$authorization` to call the Moneybird API:
+
+```php
+$auth = $this->moneybird_auth;
+
+if ($auth->hasExpired()) {
+    $auth = Moneybird::auth()->make()->refreshAccessToken($auth);
+    // Save new auth with the tenant or user
+}
+
+Moneybird::make()->authenticate($auth);
+```
 
 ## Testing
 
