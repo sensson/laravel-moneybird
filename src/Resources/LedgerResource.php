@@ -9,6 +9,7 @@ use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\Ledger;
 use Sensson\Moneybird\Requests\Ledgers\CreateLedger;
 use Sensson\Moneybird\Requests\Ledgers\DeleteLedger;
+use Sensson\Moneybird\Requests\Ledgers\GetLedger;
 use Sensson\Moneybird\Requests\Ledgers\ListLedgers;
 use Sensson\Moneybird\Requests\Ledgers\UpdateLedger;
 
@@ -24,6 +25,14 @@ class LedgerResource extends BaseResource
         $request = new ListLedgers;
 
         return collect($this->connector->send($request)->dtoOrFail());
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function get(string $id): Ledger
+    {
+        return $this->connector->send(new GetLedger($id))->dtoOrFail();
     }
 
     /**
