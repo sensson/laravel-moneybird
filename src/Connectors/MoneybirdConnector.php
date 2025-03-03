@@ -13,6 +13,7 @@ use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
 use Sensson\Moneybird\Resources\LedgerResource;
+use Sensson\Moneybird\Resources\TaxRateResource;
 
 class MoneybirdConnector extends Connector
 {
@@ -66,5 +67,10 @@ class MoneybirdConnector extends Connector
     public function ledgers(): LedgerResource
     {
         return new LedgerResource($this);
+    }
+
+    public function taxRates(): TaxRateResource
+    {
+        return new TaxRateResource($this);
     }
 }
