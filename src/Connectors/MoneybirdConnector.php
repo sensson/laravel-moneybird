@@ -12,6 +12,7 @@ use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
+use Sensson\Moneybird\Resources\CustomFieldResource;
 use Sensson\Moneybird\Resources\LedgerResource;
 use Sensson\Moneybird\Resources\TaxRateResource;
 
@@ -72,5 +73,10 @@ class MoneybirdConnector extends Connector
     public function taxRates(): TaxRateResource
     {
         return new TaxRateResource($this);
+    }
+
+    public function customFields(): CustomFieldResource
+    {
+        return new CustomFieldResource($this);
     }
 }
