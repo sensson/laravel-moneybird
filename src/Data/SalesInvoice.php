@@ -2,10 +2,8 @@
 
 namespace Sensson\Moneybird\Data;
 
-use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 
 class SalesInvoice extends Data
 {
