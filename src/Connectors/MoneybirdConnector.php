@@ -14,6 +14,7 @@ use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
 use Sensson\Moneybird\Resources\CustomFieldResource;
 use Sensson\Moneybird\Resources\LedgerResource;
+use Sensson\Moneybird\Resources\SalesInvoiceResource;
 use Sensson\Moneybird\Resources\TaxRateResource;
 
 class MoneybirdConnector extends Connector
@@ -78,5 +79,10 @@ class MoneybirdConnector extends Connector
     public function customFields(): CustomFieldResource
     {
         return new CustomFieldResource($this);
+    }
+
+    public function salesInvoices(): SalesInvoiceResource
+    {
+        return new SalesInvoiceResource($this);
     }
 }
