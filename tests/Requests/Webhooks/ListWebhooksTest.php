@@ -50,7 +50,7 @@ test('list webhooks request returns data collection of webhooks', function () {
         ->and($collection->first())->toBeInstanceOf(Webhook::class)
         ->and($collection->first()->id)->toBe('1')
         ->and($collection->first()->url)->toBe('https://example.com/webhook1')
-        ->and($collection->first()->enabled_events)->toContain(WebhookEvent::ContactCreated)
+        ->and($collection->first()->enabled_events)->toContain(WebhookEvent::ContactActivated)
         ->and($collection->last()->id)->toBe('2')
         ->and($collection->last()->url)->toBe('https://example.com/webhook2')
         ->and(count($collection->last()->enabled_events))->toBe(2);
