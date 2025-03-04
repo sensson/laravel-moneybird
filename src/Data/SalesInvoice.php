@@ -36,10 +36,12 @@ class SalesInvoice extends Data
         public ?string $sent_at = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
-        public ?Collection $details = null,
+        #[DataCollectionOf(SalesInvoiceDetail::class)]
+        public ?array $details = null,
         public ?array $payments = null,
         public ?array $notes = null,
         public ?array $attachments = null,
+        #[DataCollectionOf(Event::class)]
         public ?array $events = null,
         public ?string $version = null,
         public ?bool $prices_are_incl_tax = null,
@@ -55,6 +57,6 @@ class SalesInvoice extends Data
         public ?array $custom_fields = null,
         public ?bool $seen_by_recipient = null,
         #[DataCollectionOf(SalesInvoiceDetail::class)]
-        public ?DataCollection $details_attributes = null,
+        public ?array $details_attributes = null,
     ) {}
 }
