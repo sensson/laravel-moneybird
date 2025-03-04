@@ -12,5 +12,7 @@ class MoneybirdServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-moneybird')
             ->hasConfigFile();
+
+        config()->set('data.features.cast_and_transform_iterables', true);
     }
 }
