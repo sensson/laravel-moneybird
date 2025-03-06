@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/sensson/laravel-moneybird.svg?style=flat-square)](https://packagist.org/packages/sensson/laravel-moneybird)
 
 This package allows you to connect your Laravel application to the accounting
-software by Moneybird.
+software by [Moneybird](https://www.moneybird.nl).
 
 ## Installation
 
