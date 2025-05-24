@@ -7,9 +7,9 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\SalesInvoice;
+use Sensson\Moneybird\Enums\DeliveryMethod;
 use Sensson\Moneybird\Requests\SalesInvoices\CreateSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DeleteSalesInvoice;
-use Sensson\Moneybird\Enums\DeliveryMethod;
 use Sensson\Moneybird\Requests\SalesInvoices\DownloadPdfSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DownloadUblSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\FindSalesInvoiceByInvoiceId;
@@ -101,9 +101,9 @@ class SalesInvoiceResource extends BaseResource
     /**
      * Send a sales invoice.
      *
-     * @param string $id The ID of the sales invoice
-     * @param DeliveryMethod|null $deliveryMethod The delivery method to use (optional)
-     * @return SalesInvoice
+     * @param  string  $id  The ID of the sales invoice
+     * @param  DeliveryMethod|null  $deliveryMethod  The delivery method to use (optional)
+     *
      * @throws RequestException|FatalRequestException
      */
     public function send(string $id, ?DeliveryMethod $deliveryMethod = null): SalesInvoice
