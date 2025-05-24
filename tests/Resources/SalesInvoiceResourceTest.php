@@ -7,10 +7,12 @@ use Sensson\Moneybird\Data\SalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\CreateSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DeleteSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DownloadPdfSalesInvoice;
+use Sensson\Moneybird\Enums\DeliveryMethod;
 use Sensson\Moneybird\Requests\SalesInvoices\DownloadUblSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\FindSalesInvoiceByInvoiceId;
 use Sensson\Moneybird\Requests\SalesInvoices\GetSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\ListSalesInvoices;
+use Sensson\Moneybird\Requests\SalesInvoices\SendSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\UpdateSalesInvoice;
 use Sensson\Moneybird\Resources\SalesInvoiceResource;
 
@@ -158,4 +160,44 @@ test('downloadUbl method sends download ubl sales invoice request', function () 
 
     $mockClient->assertSent(DownloadUblSalesInvoice::class);
     expect($result)->toBe($mockUblContent);
+});
+
+test('send method sends send sales invoice request without delivery method', function () {
+    $mockClient = new MockClient([
+        SendSalesInvoice::class => MockResponse::make([
+            'id' => '123456',
+            'invoice_id' => 'INV-2023-001',
+            'sent_at' => '2023-01-01 12:00:00',
+        ], 200),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $resource = new SalesInvoiceResource($connector);
+    $result = $resource->send('123456');
+
+    $mockClient->assertSent(SendSalesInvoice::class);
+    expect($result)->toBeInstanceOf(SalesInvoice::class)
+        ->and($result->id)->toBe('123456')
+        ->and($result->sent_at)->toBe('2023-01-01 12:00:00');
+});
+
+test('send method sends send sales invoice request with delivery method', function () {
+    $mockClient = new MockClient([
+        SendSalesInvoice::class => MockResponse::make([
+            'id' => '123456',
+            'invoice_id' => 'INV-2023-001',
+            'sent_at' => '2023-01-01 12:00:00',
+            'delivery_method' => DeliveryMethod::Email,
+        ], 200),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $resource = new SalesInvoiceResource($connector);
+    $result = $resource->send('123456', DeliveryMethod::Email);
+
+    $mockClient->assertSent(SendSalesInvoice::class);
+    expect($result)->toBeInstanceOf(SalesInvoice::class)
+        ->and($result->id)->toBe('123456')
+        ->and($result->sent_at)->toBe('2023-01-01 12:00:00')
+        ->and($result->delivery_method)->toBe(DeliveryMethod::Email);
 });

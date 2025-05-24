@@ -2,6 +2,7 @@
 
 namespace Sensson\Moneybird\Data;
 
+use Sensson\Moneybird\Enums\DeliveryMethod;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 
@@ -32,6 +33,7 @@ class SalesInvoice extends Data
         public ?bool $paused = null,
         public ?string $paid_at = null,
         public ?string $sent_at = null,
+        public ?DeliveryMethod $delivery_method = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
         #[DataCollectionOf(SalesInvoiceDetail::class)]
