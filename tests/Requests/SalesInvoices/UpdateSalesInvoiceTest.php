@@ -21,6 +21,7 @@ test('update sales invoice request returns a sales invoice', function () {
     $salesInvoice = new SalesInvoice(
         reference: 'Updated reference',
         due_date: '2023-02-28',
+        payment_conditions: 'Updated Net 30 days',
     );
 
     $mockData = [
@@ -31,6 +32,7 @@ test('update sales invoice request returns a sales invoice', function () {
         'state' => 'open',
         'invoice_date' => '2023-01-01',
         'due_date' => '2023-02-28',
+        'payment_conditions' => 'Updated Net 30 days',
         'reference' => 'Updated reference',
         'created_at' => '2023-01-01T12:00:00.000Z',
         'updated_at' => '2023-01-05T12:00:00.000Z',
@@ -51,13 +53,15 @@ test('update sales invoice request returns a sales invoice', function () {
         ->and($updatedSalesInvoice->invoice_id)->toBe('INV-2023-001')
         ->and($updatedSalesInvoice->state)->toBe('open')
         ->and($updatedSalesInvoice->reference)->toBe('Updated reference')
-        ->and($updatedSalesInvoice->due_date)->toBe('2023-02-28');
+        ->and($updatedSalesInvoice->due_date)->toBe('2023-02-28')
+        ->and($updatedSalesInvoice->payment_conditions)->toBe('Updated Net 30 days');
 });
 
 test('update sales invoice request includes correct data in body', function () {
     $salesInvoice = new SalesInvoice(
         reference: 'Updated reference',
         due_date: '2023-02-28',
+        payment_conditions: 'Updated Net 30 days',
     );
 
     $mockClient = new MockClient([
@@ -65,7 +69,8 @@ test('update sales invoice request includes correct data in body', function () {
             $body = json_decode($request->body(), true);
             expect($body)->toHaveKey('sales_invoice')
                 ->and($body['sales_invoice'])->toHaveKey('reference', 'Updated reference')
-                ->and($body['sales_invoice'])->toHaveKey('due_date', '2023-02-28');
+                ->and($body['sales_invoice'])->toHaveKey('due_date', '2023-02-28')
+                ->and($body['sales_invoice'])->toHaveKey('payment_conditions', 'Updated Net 30 days');
 
             return MockResponse::make([], 200);
         },
