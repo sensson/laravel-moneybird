@@ -59,6 +59,7 @@ class SalesInvoice extends Data
         public ?string $next_reminder = null,
         public ?string $original_estimate_id = null,
         public ?string $url = null,
+        #[DataCollectionOf(CustomFieldAttribute::class)]
         public ?array $custom_fields = null,
         public ?array $notes = null,
         public ?array $attachments = null,
