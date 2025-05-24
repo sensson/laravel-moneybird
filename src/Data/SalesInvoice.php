@@ -24,6 +24,7 @@ class SalesInvoice extends Data
         public ?string $state = null,
         public ?string $invoice_date = null,
         public ?string $due_date = null,
+        public ?int $first_due_interval = null,
         public ?string $payment_reference = null,
         public ?string $reference = null,
         public ?string $language = null,
