@@ -23,6 +23,7 @@ test('create sales invoice request returns a sales invoice', function () {
         reference: 'Your reference',
         invoice_date: '2023-01-01',
         due_date: '2023-01-31',
+        payment_conditions: 'Net 30 days',
     );
 
     $mockData = [
@@ -33,6 +34,7 @@ test('create sales invoice request returns a sales invoice', function () {
         'state' => 'draft',
         'invoice_date' => '2023-01-01',
         'due_date' => '2023-01-31',
+        'payment_conditions' => 'Net 30 days',
         'reference' => 'Your reference',
         'created_at' => '2023-01-01T12:00:00.000Z',
         'updated_at' => '2023-01-01T12:00:00.000Z',
@@ -52,7 +54,8 @@ test('create sales invoice request returns a sales invoice', function () {
         ->and($createdSalesInvoice->id)->toBe('123456')
         ->and($createdSalesInvoice->invoice_id)->toBe('INV-2023-001')
         ->and($createdSalesInvoice->state)->toBe('draft')
-        ->and($createdSalesInvoice->reference)->toBe('Your reference');
+        ->and($createdSalesInvoice->reference)->toBe('Your reference')
+        ->and($createdSalesInvoice->payment_conditions)->toBe('Net 30 days');
 });
 
 test('create sales invoice request includes correct data in body', function () {
@@ -61,6 +64,7 @@ test('create sales invoice request includes correct data in body', function () {
         reference: 'Your reference',
         invoice_date: '2023-01-01',
         due_date: '2023-01-31',
+        payment_conditions: 'Net 30 days',
     );
 
     $mockClient = new MockClient([
@@ -70,7 +74,8 @@ test('create sales invoice request includes correct data in body', function () {
                 ->and($body['sales_invoice'])->toHaveKey('contact_id', '789012')
                 ->and($body['sales_invoice'])->toHaveKey('reference', 'Your reference')
                 ->and($body['sales_invoice'])->toHaveKey('invoice_date', '2023-01-01')
-                ->and($body['sales_invoice'])->toHaveKey('due_date', '2023-01-31');
+                ->and($body['sales_invoice'])->toHaveKey('due_date', '2023-01-31')
+                ->and($body['sales_invoice'])->toHaveKey('payment_conditions', 'Net 30 days');
 
             return MockResponse::make([], 201);
         },
