@@ -23,6 +23,7 @@ class SalesInvoice extends Data
         public ?int $draft_id = null,
         public ?string $state = null,
         public ?string $invoice_date = null,
+        public ?int $first_due_interval = null,
         public ?string $due_date = null,
         public ?string $payment_conditions = null,
         public ?string $payment_reference = null,
