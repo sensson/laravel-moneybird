@@ -7,6 +7,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\SalesInvoice;
+use Sensson\Moneybird\Enums\DeliveryMethod;
 use Sensson\Moneybird\Requests\SalesInvoices\CreateSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DeleteSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\DownloadPdfSalesInvoice;
@@ -14,6 +15,7 @@ use Sensson\Moneybird\Requests\SalesInvoices\DownloadUblSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\FindSalesInvoiceByInvoiceId;
 use Sensson\Moneybird\Requests\SalesInvoices\GetSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\ListSalesInvoices;
+use Sensson\Moneybird\Requests\SalesInvoices\SendSalesInvoice;
 use Sensson\Moneybird\Requests\SalesInvoices\UpdateSalesInvoice;
 
 class SalesInvoiceResource extends BaseResource
@@ -92,6 +94,21 @@ class SalesInvoiceResource extends BaseResource
     public function downloadUbl(string $id): string
     {
         $request = new DownloadUblSalesInvoice($id);
+
+        return $this->connector->send($request)->dtoOrFail();
+    }
+
+    /**
+     * Send a sales invoice.
+     *
+     * @param  string  $id  The ID of the sales invoice
+     * @param  DeliveryMethod|null  $deliveryMethod  The delivery method to use (optional)
+     *
+     * @throws RequestException|FatalRequestException
+     */
+    public function send(string $id, ?DeliveryMethod $deliveryMethod = null): SalesInvoice
+    {
+        $request = new SendSalesInvoice($id, $deliveryMethod);
 
         return $this->connector->send($request)->dtoOrFail();
     }
