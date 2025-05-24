@@ -102,6 +102,31 @@ test('create method sends create sales invoice request', function () {
         ->and($result->contact_id)->toBe('789012');
 });
 
+test('create method sends create sales invoice request with first_due_interval', function () {
+    $mockClient = new MockClient([
+        CreateSalesInvoice::class => MockResponse::make([
+            'id' => '123456',
+            'invoice_id' => 'INV-2023-001',
+            'contact_id' => '789012',
+            'first_due_interval' => 14,
+        ], 201),
+    ]);
+
+    $salesInvoice = new SalesInvoice(
+        contact_id: '789012',
+        first_due_interval: 14
+    );
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $resource = new SalesInvoiceResource($connector);
+    $result = $resource->create($salesInvoice);
+
+    $mockClient->assertSent(CreateSalesInvoice::class);
+    expect($result)->toBeInstanceOf(SalesInvoice::class)
+        ->and($result->id)->toBe('123456')
+        ->and($result->contact_id)->toBe('789012')
+        ->and($result->first_due_interval)->toBe(14);
+});
+
 test('update method sends update sales invoice request', function () {
     $mockClient = new MockClient([
         UpdateSalesInvoice::class => MockResponse::make([
@@ -120,6 +145,26 @@ test('update method sends update sales invoice request', function () {
     expect($result)->toBeInstanceOf(SalesInvoice::class)
         ->and($result->id)->toBe('123456')
         ->and($result->reference)->toBe('Updated reference');
+});
+
+test('update method sends update sales invoice request with first_due_interval', function () {
+    $mockClient = new MockClient([
+        UpdateSalesInvoice::class => MockResponse::make([
+            'id' => '123456',
+            'invoice_id' => 'INV-2023-001',
+            'first_due_interval' => 30,
+        ], 200),
+    ]);
+
+    $salesInvoice = new SalesInvoice(first_due_interval: 30);
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $resource = new SalesInvoiceResource($connector);
+    $result = $resource->update('123456', $salesInvoice);
+
+    $mockClient->assertSent(UpdateSalesInvoice::class);
+    expect($result)->toBeInstanceOf(SalesInvoice::class)
+        ->and($result->id)->toBe('123456')
+        ->and($result->first_due_interval)->toBe(30);
 });
 
 test('delete method sends delete sales invoice request', function () {
