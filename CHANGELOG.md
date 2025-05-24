@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.0.5 - 2025-05-24
+
+### What's Changed
+
+* fix: use correct fields for sales invoice data by @ju5t in https://github.com/sensson/laravel-moneybird/pull/5
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.0.4...v0.0.5
+
 ## v0.0.3 - 2025-05-24
 
 ### What's Changed
