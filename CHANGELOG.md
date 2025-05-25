@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.0.6 - 2025-05-25
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.0.5...v0.0.6
+
 ## v0.0.5 - 2025-05-24
 
 ### What's Changed
