@@ -19,7 +19,7 @@ composer require sensson/laravel-moneybird
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-moneybird-config"
+php artisan vendor:publish --tag="moneybird-config"
 ```
 
 ## Usage
