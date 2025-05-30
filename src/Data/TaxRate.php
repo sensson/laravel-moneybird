@@ -13,6 +13,7 @@ class TaxRate extends Data
         public string $name,
         public string $partial_name,
         public string $percentage,
+        public ?string $id = null,
         #[WithCast(EnumCast::class, type: TaxRateType::class)]
         public TaxRateType $tax_rate_type = TaxRateType::All,
         public string $country = '',
