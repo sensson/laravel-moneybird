@@ -21,7 +21,7 @@ test('list workflows request returns data collection of workflows', function () 
         [
             'id' => '123456',
             'administration_id' => 654321,
-            'type' => 'InvoiceWorkFlow',
+            'type' => 'InvoiceWorkflow',
             'name' => 'Standard Invoice Workflow',
             'default' => true,
             'currency' => 'EUR',
@@ -118,6 +118,6 @@ test('list workflows request handles workflow type enum values correctly', funct
     expect($collection)->toHaveCount(2)
         ->and($collection->first()->type)->toBe(WorkflowType::Invoice)
         ->and($collection->last()->type)->toBe(WorkflowType::Estimate)
-        ->and($collection->first()->type->value)->toBe('InvoiceWorkFlow')
+        ->and($collection->first()->type->value)->toBe('InvoiceWorkflow')
         ->and($collection->last()->type->value)->toBe('EstimateWorkflow');
 });
