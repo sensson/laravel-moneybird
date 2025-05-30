@@ -17,6 +17,7 @@ use Sensson\Moneybird\Resources\LedgerResource;
 use Sensson\Moneybird\Resources\SalesInvoiceResource;
 use Sensson\Moneybird\Resources\TaxRateResource;
 use Sensson\Moneybird\Resources\WebhookResource;
+use Sensson\Moneybird\Resources\WorkflowResource;
 
 class MoneybirdConnector extends Connector
 {
@@ -90,5 +91,10 @@ class MoneybirdConnector extends Connector
     public function webhooks(): WebhookResource
     {
         return new WebhookResource($this);
+    }
+
+    public function workflows(): WorkflowResource
+    {
+        return new WorkflowResource($this);
     }
 }
