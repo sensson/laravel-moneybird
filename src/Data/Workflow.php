@@ -2,6 +2,9 @@
 
 namespace Sensson\Moneybird\Data;
 
+use Sensson\Moneybird\Enums\WorkflowType;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 
 class Workflow extends Data
@@ -9,7 +12,8 @@ class Workflow extends Data
     public function __construct(
         public ?string $id = null,
         public ?int $administration_id = null,
-        public ?string $type = null,
+        #[WithCast(EnumCast::class, type: WorkflowType::class)]
+        public ?WorkflowType $type = null,
         public ?string $name = null,
         public ?bool $default = null,
         public ?string $currency = null,
