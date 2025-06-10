@@ -3,7 +3,6 @@
 namespace Sensson\Moneybird\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Saloon\Http\Connector;
 use Saloon\Http\Faking\MockClient;
 use Sensson\Moneybird\Connectors\AuthConnector;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
