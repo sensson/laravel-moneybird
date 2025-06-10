@@ -30,7 +30,7 @@ class Moneybird extends Facade
 
     public static function fake(MockClient $mockClient)
     {
-        return static::swap((new MoneybirdConnector)->withMockClient($mockClient));
+        static::swap((new MoneybirdConnector)->withMockClient($mockClient));
     }
 
     public static function make(): MoneybirdConnector
