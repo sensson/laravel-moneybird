@@ -69,6 +69,263 @@ if ($auth->hasExpired()) {
 Moneybird::make()->authenticate($auth);
 ```
 
+## Resources
+
+All resources are accessed through the `Moneybird` facade using the pattern:
+`Moneybird::administration($administrationId)->resourceName()`
+
+### Administrations
+
+Get all administrations:
+
+```php
+$administrations = Moneybird::administrations()->all();
+```
+
+### Contacts
+
+Get all contacts:
+
+```php
+$administrationId = 'your-administration-id';
+$contacts = Moneybird::administration($administrationId)->contacts()->all();
+```
+
+Get contacts with pagination and filters:
+
+```php
+$contacts = Moneybird::administration($administrationId)->contacts()->all(
+    perPage: 25,
+    page: 1,
+    query: 'search term',
+    includeArchived: false,
+    todo: 'todo filter'
+);
+```
+
+Get a specific contact:
+
+```php
+$contact = Moneybird::administration($administrationId)
+    ->contacts()
+    ->get('contact-id');
+```
+
+Create a new contact:
+
+```php
+$contact = new Contact([
+    'company_name' => 'Example Company',
+    'firstname' => 'John',
+    'lastname' => 'Doe'
+]);
+$createdContact = Moneybird::administration($administrationId)
+    ->contacts()
+    ->create($contact);
+```
+
+Update a contact:
+
+```php
+$updatedContact = Moneybird::administration($administrationId)
+    ->contacts()
+    ->update('contact-id', $contact);
+```
+
+### Custom Fields
+
+Get all custom fields:
+
+```php
+$administrationId = 'your-administration-id';
+$customFields = Moneybird::administration($administrationId)
+    ->customFields()
+    ->all();
+```
+
+### Ledgers
+
+Get all ledgers:
+
+```php
+$administrationId = 'your-administration-id';
+$ledgers = Moneybird::administration($administrationId)->ledgers()->all();
+```
+
+Get a specific ledger:
+
+```php
+$ledger = Moneybird::administration($administrationId)
+    ->ledgers()
+    ->get('ledger-id');
+```
+
+Create a new ledger:
+
+```php
+$ledger = new Ledger([
+    'name' => 'New Ledger',
+    'account_type' => AccountType::Expenses
+]);
+$createdLedger = Moneybird::administration($administrationId)
+    ->ledgers()
+    ->create($ledger, 'rgs-code');
+```
+
+Update a ledger:
+
+```php
+$updatedLedger = Moneybird::administration($administrationId)
+    ->ledgers()
+    ->update('ledger-id', $ledger, 'rgs-code');
+```
+
+Delete a ledger:
+
+```php
+Moneybird::administration($administrationId)
+    ->ledgers()
+    ->delete('ledger-id');
+```
+
+### Sales Invoices
+
+Get all sales invoices:
+
+```php
+$administrationId = 'your-administration-id';
+$invoices = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->all();
+```
+
+Get a specific sales invoice:
+
+```php
+$invoice = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->get('invoice-id');
+```
+
+Find invoice by invoice ID:
+
+```php
+$invoice = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->findByInvoiceId('2023-001');
+```
+
+Create a new sales invoice:
+
+```php
+$invoice = new SalesInvoice([
+    'contact_id' => 'contact-id',
+    'invoice_date' => '2023-12-01'
+]);
+$createdInvoice = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->create($invoice);
+```
+
+Update a sales invoice:
+
+```php
+$updatedInvoice = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->update('invoice-id', $invoice);
+```
+
+Delete a sales invoice:
+
+```php
+Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->delete('invoice-id');
+```
+
+Download invoice as PDF:
+
+```php
+$pdfContent = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->downloadPdf('invoice-id');
+```
+
+Download invoice as UBL:
+
+```php
+$ublContent = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->downloadUbl('invoice-id');
+```
+
+Send invoice:
+
+```php
+$sentInvoice = Moneybird::administration($administrationId)
+    ->salesInvoices()
+    ->send('invoice-id', DeliveryMethod::Email);
+```
+
+### Tax Rates
+
+Get all tax rates:
+
+```php
+$administrationId = 'your-administration-id';
+$taxRates = Moneybird::administration($administrationId)->taxRates()->all();
+```
+
+Get tax rates with pagination and filters:
+
+```php
+$taxRates = Moneybird::administration($administrationId)->taxRates()->all(
+    perPage: 25,
+    page: 1,
+    filter: 'active'
+);
+```
+
+### Webhooks
+
+Get all webhooks:
+
+```php
+$administrationId = 'your-administration-id';
+$webhooks = Moneybird::administration($administrationId)->webhooks()->all();
+```
+
+Create a new webhook:
+
+```php
+$webhook = new Webhook([
+    'url' => 'https://example.com/webhook',
+    'events' => [WebhookEvent::SalesInvoiceCreated]
+]);
+$createdWebhook = Moneybird::administration($administrationId)
+    ->webhooks()
+    ->create($webhook);
+```
+
+Delete a webhook:
+
+```php
+Moneybird::administration($administrationId)
+    ->webhooks()
+    ->delete('webhook-id');
+```
+
+### Workflows
+
+Get all workflows:
+
+```php
+$administrationId = 'your-administration-id';
+$workflows = Moneybird::administration($administrationId)
+    ->workflows()
+    ->all();
+```
+
 ## Testing
 
 ```bash
