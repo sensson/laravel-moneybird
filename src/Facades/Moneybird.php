@@ -18,19 +18,19 @@ class Moneybird extends Facade
         return MoneybirdConnector::class;
     }
 
-    public static function auth(): AuthConnector|Connector
+    public static function auth(): AuthConnector
     {
         return resolve(AuthConnector::class);
-    }
-
-    public static function authFake(MockClient $mockClient)
-    {
-        return app()->instance(AuthConnector::class, (new AuthConnector)->withMockClient($mockClient));
     }
 
     public static function fake(MockClient $mockClient)
     {
         static::swap((new MoneybirdConnector)->withMockClient($mockClient));
+    }
+
+    public static function authFake(MockClient $mockClient)
+    {
+        return app()->instance(AuthConnector::class, (new AuthConnector)->withMockClient($mockClient));
     }
 
     public static function make(): MoneybirdConnector
