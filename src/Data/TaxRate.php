@@ -11,12 +11,12 @@ class TaxRate extends Data
 {
     public function __construct(
         public string $name,
-        public string $partial_name,
         public ?string $percentage,
         public ?string $id = null,
+        public ?string $partial_name = null,
         #[WithCast(EnumCast::class, type: TaxRateType::class)]
         public TaxRateType $tax_rate_type = TaxRateType::All,
-        public string $country = '',
+        public ?string $country = null,
         public ?bool $show_tax = null,
         public bool $active = true,
         public string $created_after = '',
