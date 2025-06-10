@@ -10,6 +10,7 @@ use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
+use Sensson\Moneybird\Requests\Contacts\UpdateContact;
 
 class ContactResource extends BaseResource
 {
@@ -54,5 +55,13 @@ class ContactResource extends BaseResource
     public function create(Contact $contact): Contact
     {
         return $this->connector->send(new CreateContact($contact))->dtoOrFail();
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function update(string $id, Contact $contact): Contact
+    {
+        return $this->connector->send(new UpdateContact($id, $contact))->dtoOrFail();
     }
 }
