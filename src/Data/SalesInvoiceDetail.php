@@ -21,8 +21,8 @@ class SalesInvoiceDetail extends Data
         public ?string $row_order = null,
         public ?string $total_price_excl_tax_with_discount = null,
         public ?string $total_price_excl_tax_with_discount_base = null,
-        public ?string $tax_report_reference = null,
-        public ?array $mandatory_tax_text = null,
+        public ?array $tax_report_reference = [],
+        public ?string $mandatory_tax_text = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
     ) {}
