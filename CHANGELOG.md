@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.0.16 - 2026-01-13
+
+### What's Changed
+
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/6
+* chore(deps): bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/7
+* chore(deps): bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/8
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/9
+* chore(deps): bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/11
+* tests: force testbench ^9.5 by @ju5t in https://github.com/sensson/laravel-moneybird/pull/12
+* fix: also pass `details_attributes` when creating an invoice
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.0.15...v0.0.16
+
 ## v0.0.15 - 2025-06-26
 
 **Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.0.14...v0.0.15
