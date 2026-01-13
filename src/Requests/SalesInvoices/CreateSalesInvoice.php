@@ -28,7 +28,12 @@ class CreateSalesInvoice extends Request implements HasBody
 
     protected function defaultBody(): array
     {
-        return ['sales_invoice' => $this->salesInvoice->toArray()];
+        $salesInvoice = [
+            ...$this->salesInvoice->toArray(),
+            'details_attributes' => collect($this->salesInvoice->details)->toArray(),
+        ];
+
+        return ['sales_invoice' => $salesInvoice];
     }
 
     /**
