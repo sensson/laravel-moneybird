@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.1.0 - 2026-01-29
+
+### What's Changed
+
+* chore(deps): bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/10
+* fix: use correct field values for source by @ju5t in https://github.com/sensson/laravel-moneybird/pull/14
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.0.16...v0.1.0
+
 ## v0.0.16 - 2026-01-13
 
 ### What's Changed
