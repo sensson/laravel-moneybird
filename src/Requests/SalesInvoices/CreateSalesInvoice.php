@@ -31,6 +31,7 @@ class CreateSalesInvoice extends Request implements HasBody
         $salesInvoice = [
             ...$this->salesInvoice->toArray(),
             'details_attributes' => collect($this->salesInvoice->details)->toArray(),
+            'custom_fields_attributes' => collect($this->salesInvoice->custom_fields)->toArray(),
         ];
 
         return ['sales_invoice' => $salesInvoice];
