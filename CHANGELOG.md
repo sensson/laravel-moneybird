@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.2.0 - 2026-02-24
+
+### What's Changed
+
+* feat: add custom exception for revoked access tokens by @ju5t in https://github.com/sensson/laravel-moneybird/pull/15
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.1.1...v0.2.0
+
 ## v0.1.1 - 2026-01-29
 
 **Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.1.0...v0.1.1
