@@ -3,6 +3,7 @@
 namespace Sensson\Moneybird\Connectors;
 
 use Saloon\Http\Connector;
+use Saloon\Http\Response;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\MemoryStore;
@@ -10,6 +11,8 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Conditionable;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
+use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
+use Throwable;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
 use Sensson\Moneybird\Resources\CustomFieldResource;
@@ -49,6 +52,15 @@ class MoneybirdConnector extends Connector
     protected function resolveRateLimitStore(): RateLimitStore
     {
         return new MemoryStore;
+    }
+
+    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    {
+        if ($response->status() === 401 && str_contains($response->body(), 'access token revoked')) {
+            return new AccessTokenRevokedException($response, previous: $senderException);
+        }
+
+        return null;
     }
 
     public function administration(string $administrationId): self

@@ -4,13 +4,25 @@ namespace Sensson\Moneybird\Connectors;
 
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
+use Saloon\Http\Response;
 use Saloon\Traits\OAuth2\AuthorizationCodeGrant;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
+use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
+use Throwable;
 
 class AuthConnector extends Connector
 {
     use AlwaysThrowOnErrors;
     use AuthorizationCodeGrant;
+
+    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    {
+        if ($response->status() === 401 && str_contains($response->body(), 'access token revoked')) {
+            return new AccessTokenRevokedException($response, previous: $senderException);
+        }
+
+        return null;
+    }
 
     public function resolveBaseUrl(): string
     {
