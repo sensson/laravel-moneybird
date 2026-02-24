@@ -12,7 +12,6 @@ use Saloon\Traits\Conditionable;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
-use Throwable;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
 use Sensson\Moneybird\Resources\CustomFieldResource;
@@ -21,6 +20,7 @@ use Sensson\Moneybird\Resources\SalesInvoiceResource;
 use Sensson\Moneybird\Resources\TaxRateResource;
 use Sensson\Moneybird\Resources\WebhookResource;
 use Sensson\Moneybird\Resources\WorkflowResource;
+use Throwable;
 
 class MoneybirdConnector extends Connector
 {
