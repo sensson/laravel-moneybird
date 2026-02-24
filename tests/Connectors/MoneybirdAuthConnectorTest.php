@@ -1,7 +1,12 @@
 <?php
 
+use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Helpers\OAuth2\OAuthConfig;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\AuthConnector;
+use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
+use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
 
 test('auth connector has correct base url', function () {
     $connector = new AuthConnector;
@@ -25,3 +30,21 @@ test('auth connector has correct oauth config', function () {
         ->and($oauthConfig->getAuthorizeEndpoint())->toBe('authorize')
         ->and($oauthConfig->getTokenEndpoint())->toBe('token');
 });
+
+it('throws AccessTokenRevokedException when access token is revoked', function () {
+    $mockClient = new MockClient([
+        ListAdministrations::class => MockResponse::make('access token revoked', 401),
+    ]);
+
+    $connector = (new AuthConnector)->withMockClient($mockClient);
+    $connector->send(new ListAdministrations);
+})->throws(AccessTokenRevokedException::class);
+
+it('does not throw AccessTokenRevokedException for other 401 responses', function () {
+    $mockClient = new MockClient([
+        ListAdministrations::class => MockResponse::make('unauthorized', 401),
+    ]);
+
+    $connector = (new AuthConnector)->withMockClient($mockClient);
+    $connector->send(new ListAdministrations);
+})->throws(UnauthorizedException::class);
