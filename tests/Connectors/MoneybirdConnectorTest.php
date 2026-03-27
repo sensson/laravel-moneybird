@@ -3,6 +3,7 @@
 use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Traits\Plugins\AcceptsJson;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
 use Sensson\Moneybird\Requests\Administrations\ListAdministrations;
@@ -32,7 +33,7 @@ test('connector accepts json by default', function () {
 
     // Check if the connector uses the AcceptsJson trait
     $traits = class_uses_recursive(get_class($connector));
-    expect($traits)->toContain(\Saloon\Traits\Plugins\AcceptsJson::class);
+    expect($traits)->toContain(AcceptsJson::class);
 });
 
 it('throws AccessTokenRevokedException when access token is revoked', function () {
