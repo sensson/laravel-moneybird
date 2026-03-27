@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.3.0 - 2026-03-27
+
+### What's Changed
+
+* feat: add laravel 13 support, drop laravel 10 by @ju5t in https://github.com/sensson/laravel-moneybird/pull/17
+* feat: upgrade saloon to v4 by @ju5t in https://github.com/sensson/laravel-moneybird/pull/18
+
+### BREAKING CHANGES
+
+The `MoneybirdAuth` cast now uses `json_encode()` instead of `serialize`. Although it is backwards compatible we recommend updating any stored values by doing:
+
+```
+foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
+    $user->moneybird_auth = $user->moneybird_auth;
+    $user->save();
+}
+
+```
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.2.0...v0.3.0
+
 ## v0.2.0 - 2026-02-24
 
 ### What's Changed
