@@ -5,8 +5,10 @@ use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Booking;
 use Sensson\Moneybird\Requests\FinancialMutations\GetFinancialMutation;
+use Sensson\Moneybird\Requests\FinancialMutations\GetFinancialMutationsByIds;
 use Sensson\Moneybird\Requests\FinancialMutations\LinkBookingFinancialMutation;
 use Sensson\Moneybird\Requests\FinancialMutations\ListFinancialMutations;
+use Sensson\Moneybird\Requests\FinancialMutations\SynchronizeFinancialMutations;
 use Sensson\Moneybird\Requests\FinancialMutations\UnlinkBookingFinancialMutation;
 use Sensson\Moneybird\Resources\FinancialMutationResource;
 
@@ -29,20 +31,62 @@ test('all() calls the list financial mutations request', function () {
     $mockClient->assertSent(ListFinancialMutations::class);
 });
 
-it('passes pagination parameters to all()', function () {
+it('passes pagination and filter parameters to all()', function () {
     $mockClient = new MockClient([
         ListFinancialMutations::class => MockResponse::make([]),
     ]);
 
     $connector = (new MoneybirdConnector)->withMockClient($mockClient);
 
-    (new FinancialMutationResource($connector))->all(perPage: 10, page: 2);
+    (new FinancialMutationResource($connector))->all(perPage: 10, page: 2, filter: 'period:this_month');
 
     $mockClient->assertSent(function (ListFinancialMutations $request) {
         $query = $request->query()->all();
 
-        return $query['per_page'] === 10 && $query['page'] === 2;
+        return $query['per_page'] === 10
+            && $query['page'] === 2
+            && $query['filter'] === 'period:this_month';
     });
+});
+
+test('synchronization() calls the synchronize request', function () {
+    $mockClient = new MockClient([
+        SynchronizeFinancialMutations::class => MockResponse::make([
+            ['id' => '123456', 'version' => 3],
+            ['id' => '654321', 'version' => 1],
+        ]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    $versions = (new FinancialMutationResource($connector))->synchronization('period:this_month');
+
+    $mockClient->assertSent(function (SynchronizeFinancialMutations $request) {
+        return $request->query()->all()['filter'] === 'period:this_month';
+    });
+
+    expect($versions)->toHaveCount(2)
+        ->and($versions->first()->id)->toBe('123456')
+        ->and($versions->first()->version)->toBe(3);
+});
+
+test('getByIds() calls the synchronization batch request', function () {
+    $mockClient = new MockClient([
+        GetFinancialMutationsByIds::class => MockResponse::make([
+            ['id' => '123456', 'amount' => '100.00'],
+        ]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    $mutations = (new FinancialMutationResource($connector))->getByIds(['123456', '654321']);
+
+    $mockClient->assertSent(function (GetFinancialMutationsByIds $request) {
+        return $request->body()->all()['ids'] === ['123456', '654321'];
+    });
+
+    expect($mutations)->toHaveCount(1)
+        ->and($mutations->first()->id)->toBe('123456');
 });
 
 test('get() calls the get financial mutation request', function () {

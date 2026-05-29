@@ -143,6 +143,80 @@ $customFields = Moneybird::administration($administrationId)
     ->all();
 ```
 
+### Financial Mutations
+
+Get all financial mutations. The list is limited to 100 records and accepts
+an optional Moneybird filter string:
+
+```php
+$administrationId = 'your-administration-id';
+$mutations = Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->all(filter: 'period:this_month,state:unprocessed');
+```
+
+Get a specific financial mutation:
+
+```php
+$mutation = Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->get('financial-mutation-id');
+```
+
+To pull in more than 100 mutations, use synchronization. First retrieve the
+id and version of every mutation matching a filter, then fetch the full
+records in batches of up to 100:
+
+```php
+$versions = Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->synchronization('period:this_month,mutation_type:debit');
+
+$ids = $versions->pluck('id')->take(100)->all();
+
+$mutations = Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->getByIds($ids);
+```
+
+Moneybird does not allow filtering mutations by invoice. To find the mutations
+that paid a sales invoice, inspect the payments on each mutation:
+
+```php
+foreach ($mutations as $mutation) {
+    foreach ($mutation->payments as $payment) {
+        if ($payment->invoice_type === 'SalesInvoice' && $payment->invoice_id === $invoiceId) {
+            // ...
+        }
+    }
+}
+```
+
+Link a booking to a mutation:
+
+```php
+$booking = new Booking([
+    'booking_type' => 'LedgerAccount',
+    'booking_id' => 'ledger-account-id',
+    'price' => '10.00',
+]);
+Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->linkBooking('financial-mutation-id', $booking);
+```
+
+Unlink a booking from a mutation:
+
+```php
+$booking = new Booking([
+    'booking_type' => 'Payment',
+    'booking_id' => 'payment-id',
+]);
+Moneybird::administration($administrationId)
+    ->financialMutations()
+    ->unlinkBooking('financial-mutation-id', $booking);
+```
+
 ### Ledgers
 
 Get all ledgers:
