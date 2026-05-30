@@ -18,7 +18,7 @@ class SynchronizeFinancialMutations extends Request
     }
 
     /**
-     * @return array{mixed: FinancialMutationVersion}
+     * @return array<int, FinancialMutationVersion>
      *
      * @throws JsonException
      */

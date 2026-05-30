@@ -37,7 +37,7 @@ class GetFinancialMutationsByIds extends Request implements HasBody
     }
 
     /**
-     * @return array{mixed: FinancialMutation}
+     * @return array<int, FinancialMutation>
      *
      * @throws JsonException
      */

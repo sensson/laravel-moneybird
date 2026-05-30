@@ -28,9 +28,9 @@ class UnlinkBookingFinancialMutation extends Request implements HasBody
 
     protected function defaultBody(): array
     {
-        return [
+        return collect([
             'booking_type' => $this->booking->booking_type,
             'booking_id' => $this->booking->booking_id,
-        ];
+        ])->reject(fn (mixed $value): bool => $value === null)->toArray();
     }
 }

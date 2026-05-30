@@ -18,7 +18,7 @@ class ListFinancialMutations extends Request
     }
 
     /**
-     * @return array{mixed: FinancialMutation}
+     * @return array<int, FinancialMutation>
      *
      * @throws JsonException
      */
