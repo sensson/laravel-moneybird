@@ -15,6 +15,7 @@ use Sensson\Moneybird\Exceptions\AccessTokenRevokedException;
 use Sensson\Moneybird\Resources\AdministrationResource;
 use Sensson\Moneybird\Resources\ContactResource;
 use Sensson\Moneybird\Resources\CustomFieldResource;
+use Sensson\Moneybird\Resources\FinancialMutationResource;
 use Sensson\Moneybird\Resources\LedgerResource;
 use Sensson\Moneybird\Resources\SalesInvoiceResource;
 use Sensson\Moneybird\Resources\TaxRateResource;
@@ -83,6 +84,11 @@ class MoneybirdConnector extends Connector
     public function ledgers(): LedgerResource
     {
         return new LedgerResource($this);
+    }
+
+    public function financialMutations(): FinancialMutationResource
+    {
+        return new FinancialMutationResource($this);
     }
 
     public function taxRates(): TaxRateResource
