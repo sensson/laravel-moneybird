@@ -2,6 +2,16 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.4.0 - 2026-05-30
+
+### What's Changed
+
+* chore(deps): bump ramsey/composer-install from 3 to 4 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/16
+* chore(deps): bump dependabot/fetch-metadata from 2.5.0 to 3.1.0 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/20
+* feat: add financial mutations resource by @ju5t in https://github.com/sensson/laravel-moneybird/pull/21
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.3.0...v0.4.0
+
 ## v0.3.0 - 2026-03-27
 
 ### What's Changed
@@ -18,6 +28,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 ```
 **Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.2.0...v0.3.0
