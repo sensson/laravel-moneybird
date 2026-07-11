@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.4.1 - 2026-07-11
+
+### What's Changed
+
+* chore(deps): bump actions/checkout from 6 to 7 by @dependabot[bot] in https://github.com/sensson/laravel-moneybird/pull/22
+* feat: add payment url to sales invoice data by @ju5t in https://github.com/sensson/laravel-moneybird/pull/23
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.4.0...v0.4.1
+
 ## v0.4.0 - 2026-05-30
 
 ### What's Changed
@@ -28,6 +37,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 ```
