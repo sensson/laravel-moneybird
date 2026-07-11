@@ -108,6 +108,8 @@ test('get method sends get sales invoice request', function () {
         GetSalesInvoice::class => MockResponse::make([
             'id' => '123456',
             'invoice_id' => 'INV-2023-001',
+            'url' => 'https://moneybird.dev/123/external/abc/sales_invoice',
+            'payment_url' => 'https://moneybird.dev/123/external/abc/payment',
         ]),
     ]);
 
@@ -117,7 +119,9 @@ test('get method sends get sales invoice request', function () {
 
     $mockClient->assertSent(GetSalesInvoice::class);
     expect($result)->toBeInstanceOf(SalesInvoice::class)
-        ->and($result->id)->toBe('123456');
+        ->and($result->id)->toBe('123456')
+        ->and($result->url)->toBe('https://moneybird.dev/123/external/abc/sales_invoice')
+        ->and($result->payment_url)->toBe('https://moneybird.dev/123/external/abc/payment');
 });
 
 test('get method retrieves sales invoice with custom_fields', function () {
