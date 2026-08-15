@@ -16,6 +16,7 @@ class Webhook extends Data
         public ?bool $last_http_status = null,
         public ?string $last_http_body = null,
         public ?string $token = null,
+        public ?string $secret = null,
         public ?string $last_http_response_at = '',
         public ?string $created_at = '',
         public ?string $updated_at = '',

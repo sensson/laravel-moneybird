@@ -372,14 +372,18 @@ $webhooks = Moneybird::administration($administrationId)->webhooks()->all();
 Create a new webhook:
 
 ```php
-$webhook = new Webhook([
-    'url' => 'https://example.com/webhook',
-    'events' => [WebhookEvent::SalesInvoiceCreated]
-]);
+$webhook = new Webhook(
+    url: 'https://example.com/webhook',
+    enabled_events: [WebhookEvent::SalesInvoiceCreated],
+);
+
 $createdWebhook = Moneybird::administration($administrationId)
     ->webhooks()
     ->create($webhook);
 ```
+
+Store `$createdWebhook->secret` securely when the webhook is created. Moneybird
+only returns this signing secret in the creation response.
 
 Delete a webhook:
 
