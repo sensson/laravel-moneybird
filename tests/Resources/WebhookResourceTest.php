@@ -58,6 +58,8 @@ test('webhook resource create() method sends correct request', function () {
         'administration_id' => '123456',
         'url' => 'https://example.com/webhook',
         'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
+        'token' => 'webhook-token',
+        'secret' => 'webhook-signing-secret',
         'created_at' => '2023-01-01T00:00:00.000Z',
         'updated_at' => '2023-01-01T00:00:00.000Z',
     ];
@@ -76,6 +78,8 @@ test('webhook resource create() method sends correct request', function () {
 
     expect($result)->toBeInstanceOf(Webhook::class)
         ->and($result->id)->toBe('1')
+        ->and($result->token)->toBe('webhook-token')
+        ->and($result->secret)->toBe('webhook-signing-secret')
         ->and($result->url)->toBe('https://example.com/webhook')
         ->and(count($result->enabled_events))->toBe(2);
 });
