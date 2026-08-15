@@ -389,6 +389,23 @@ Moneybird::administration($administrationId)
     ->delete('webhook-id');
 ```
 
+Verify that a webhook was sent by Moneybird using the raw request body, the
+`Moneybird-Signature` header, and the signing secret returned when the webhook
+was created:
+
+```php
+use Sensson\Moneybird\MoneybirdWebhookSignature;
+
+$isValid = MoneybirdWebhookSignature::isValid(
+    payload: $rawRequestBody,
+    header: $moneybirdSignatureHeader,
+    secret: $webhookSigningSecret,
+);
+```
+
+Signatures older or newer than five minutes are rejected by default. Pass a
+different number of seconds as the `tolerance` argument when needed.
+
 ### Workflows
 
 Get all workflows:
