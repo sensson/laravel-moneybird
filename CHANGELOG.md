@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.5.0 - 2026-08-15
+
+### What's Changed
+
+* feat: verify webhook signatures by @ju5t in https://github.com/sensson/laravel-moneybird/pull/24
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.4.1...v0.5.0
+
 ## v0.4.1 - 2026-07-11
 
 ### What's Changed
@@ -37,6 +45,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 
