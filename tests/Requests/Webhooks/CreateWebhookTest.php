@@ -32,14 +32,18 @@ test('create webhook request sends correct payload', function () {
         'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
     ]);
 
-    $request = new CreateWebhook($webhook);
-
-    expect($request->body()->all())->toBe([
-        'webhook' => [
-            'url' => 'https://example.com/webhook',
-            'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
-        ],
+    $mockClient = new MockClient([
+        CreateWebhook::class => MockResponse::make([], 201),
     ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $request = new CreateWebhook($webhook);
+    $connector->send($request);
+
+    expect($mockClient->getLastPendingRequest()?->body()?->all())
+        ->toHaveKey('url', 'https://example.com/webhook')
+        ->toHaveKey('enabled_events', [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated])
+        ->not->toHaveKey('webhook');
 });
 
 test('create webhook request returns webhook data', function () {
