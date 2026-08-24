@@ -6,6 +6,7 @@ use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Webhook;
 use Sensson\Moneybird\Enums\WebhookEvent;
+use Sensson\Moneybird\Enums\WebhookEventGroup;
 use Sensson\Moneybird\Requests\Webhooks\CreateWebhook;
 
 test('create webhook request has correct endpoint', function () {
@@ -29,7 +30,7 @@ test('create webhook request uses POST method', function () {
 test('create webhook request sends correct payload', function () {
     $webhook = Webhook::from([
         'url' => 'https://example.com/webhook',
-        'enabled_events' => [WebhookEvent::Contact, WebhookEvent::ContactCreated],
+        'enabled_events' => [WebhookEventGroup::Contact, WebhookEvent::ContactCreated],
     ]);
 
     $mockClient = new MockClient([
@@ -44,7 +45,7 @@ test('create webhook request sends correct payload', function () {
 
     expect($body)
         ->toHaveKey('url', 'https://example.com/webhook')
-        ->toHaveKey('enabled_events', [WebhookEvent::Contact, WebhookEvent::ContactCreated])
+        ->toHaveKey('enabled_events', [WebhookEventGroup::Contact, WebhookEvent::ContactCreated])
         ->not->toHaveKey('webhook')
         ->and(json_decode(
             json_encode($body, JSON_THROW_ON_ERROR),
@@ -56,7 +57,7 @@ test('create webhook request sends correct payload', function () {
 test('create webhook request returns webhook data', function () {
     $webhook = Webhook::from([
         'url' => 'https://example.com/webhook',
-        'enabled_events' => [WebhookEvent::Contact, WebhookEvent::SalesInvoiceCreated],
+        'enabled_events' => [WebhookEventGroup::Contact, WebhookEvent::SalesInvoiceCreated],
     ]);
 
     $mockData = [
@@ -87,6 +88,5 @@ test('create webhook request returns webhook data', function () {
         ->and($result->administration_id)->toBe('123456');
 
     expect($result->enabled_events)
-        ->toBe([WebhookEvent::Contact, WebhookEvent::SalesInvoiceCreated])
-        ->each->toBeInstanceOf(WebhookEvent::class);
+        ->toBe([WebhookEventGroup::Contact, WebhookEvent::SalesInvoiceCreated]);
 });

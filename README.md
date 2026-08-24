@@ -382,6 +382,22 @@ $createdWebhook = Moneybird::administration($administrationId)
     ->create($webhook);
 ```
 
+Subscribe to every event with a shared prefix by using a webhook event group:
+
+```php
+$webhook = new Webhook(
+    url: 'https://example.com/webhook',
+    enabled_events: [WebhookEventGroup::SalesInvoice],
+);
+```
+
+When handling an incoming payload, `tryFrom()` lets unknown future actions fall
+through without throwing:
+
+```php
+$event = WebhookEvent::tryFrom($payload['action']);
+```
+
 Store `$createdWebhook->secret` securely when the webhook is created. Moneybird
 only returns this signing secret in the creation response.
 

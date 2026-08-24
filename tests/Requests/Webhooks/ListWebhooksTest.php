@@ -6,6 +6,7 @@ use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Webhook;
 use Sensson\Moneybird\Enums\WebhookEvent;
+use Sensson\Moneybird\Enums\WebhookEventGroup;
 use Sensson\Moneybird\Requests\Webhooks\ListWebhooks;
 
 test('list webhooks request has correct endpoint', function () {
@@ -72,6 +73,26 @@ test('list webhooks hydrates event groups and known events', function () {
     $webhook = collect($connector->send(new ListWebhooks)->dto())->first();
 
     expect($webhook->enabled_events)
-        ->toBe([WebhookEvent::Contact, WebhookEvent::ContactCreated])
-        ->each->toBeInstanceOf(WebhookEvent::class);
+        ->toBe([WebhookEventGroup::Contact, WebhookEvent::ContactCreated]);
+});
+
+test('list webhooks preserves unknown events for forward compatibility', function () {
+    $mockClient = new MockClient([
+        ListWebhooks::class => MockResponse::make([
+            [
+                'id' => '1',
+                'administration_id' => '123456',
+                'url' => 'https://example.com/webhook',
+                'enabled_events' => ['contact_created', 'future_event'],
+            ],
+        ], 200),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $webhook = collect($connector->send(new ListWebhooks)->dto())->first();
+
+    expect($webhook->enabled_events)->toBe([
+        WebhookEvent::ContactCreated,
+        'future_event',
+    ]);
 });

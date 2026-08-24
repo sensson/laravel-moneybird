@@ -2,7 +2,10 @@
 
 namespace Sensson\Moneybird\Data;
 
+use Sensson\Moneybird\Casts\WebhookEventSubscriptionCast;
 use Sensson\Moneybird\Enums\WebhookEvent;
+use Sensson\Moneybird\Enums\WebhookEventGroup;
+use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Data;
 
 class Webhook extends Data
@@ -11,7 +14,8 @@ class Webhook extends Data
         public ?string $id = null,
         public ?string $administration_id = null,
         public ?string $url = null,
-        /** @var array<WebhookEvent> */
+        /** @var array<WebhookEvent|WebhookEventGroup|string> */
+        #[WithCast(WebhookEventSubscriptionCast::class)]
         public array $enabled_events = [],
         public ?bool $last_http_status = null,
         public ?string $last_http_body = null,

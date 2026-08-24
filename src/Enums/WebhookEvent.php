@@ -3,11 +3,13 @@
 namespace Sensson\Moneybird\Enums;
 
 /**
- * This is a list of all possible webhook events in Moneybird. Feel free
- * to use this in your own app or package.
+ * All webhook events documented by Moneybird.
  */
 enum WebhookEvent: string
 {
+    case AccessTokenCreated = 'access_token_created';
+    case AccessTokenRevoked = 'access_token_revoked';
+
     case AdministrationActivated = 'administration_activated';
     case AdministrationAdded = 'administration_added';
     case AdministrationAdyenOffboardingPerformedByAdmin = 'administration_adyen_offboarding_performed_by_admin';
@@ -58,6 +60,9 @@ enum WebhookEvent: string
     case AdyenPaymentInstrumentUpdated = 'adyen_payment_instrument_updated';
     case AdyenPaymentInstrumentActivated = 'adyen_payment_instrument_activated';
     case AdyenPaymentInstrumentSuspended = 'adyen_payment_instrument_suspended';
+    case AdyenPaymentInstrumentNetworkTokenCreated = 'adyen_payment_instrument_network_token_created';
+    case AdyenPaymentInstrumentNetworkTokenUpdated = 'adyen_payment_instrument_network_token_updated';
+    case AdyenPaymentInstrumentPinChanged = 'adyen_payment_instrument_pin_changed';
 
     case CompanyAssetsAssetCreated = 'company_assets_asset_created';
     case CompanyAssetsAssetDestroyed = 'company_assets_asset_destroyed';
@@ -88,7 +93,6 @@ enum WebhookEvent: string
 
     case ChangedIbanSendEmail = 'changed_iban_send_email';
 
-    case Contact = 'contact';
     case ContactIsTrusted = 'contact_is_trusted';
     case ContactIsNotTrusted = 'contact_is_not_trusted';
     case ContactArchived = 'contact_archived';
@@ -101,6 +105,7 @@ enum WebhookEvent: string
     case ContactMandateRequestInitiated = 'contact_mandate_request_initiated';
     case ContactMandateRequestSucceeded = 'contact_mandate_request_succeeded';
     case ContactMandateRequestUrlObtained = 'contact_mandate_request_url_obtained';
+    case ContactMandateDestroyed = 'contact_mandate_destroyed';
     case ContactMerged = 'contact_merged';
     case ContactOnlineAuthorizationLinkRequested = 'contact_online_authorization_link_requested';
     case ContactPaidSubscriptionChangedToSponsored = 'contact_paid_subscription_changed_to_sponsored';
@@ -108,6 +113,7 @@ enum WebhookEvent: string
     case ContactPersonDestroyed = 'contact_person_destroyed';
     case ContactPersonUpdated = 'contact_person_updated';
     case ContactSponsoredSubscriptionLinkRequested = 'contact_sponsored_subscription_link_requested';
+    case ContactTaxNumberValidated = 'contact_tax_number_validated';
 
     case CreditInvoiceCreatedFromOriginal = 'credit_invoice_created_from_original';
 
@@ -220,10 +226,15 @@ enum WebhookEvent: string
     case LegalTermsAcceptationEmailSent = 'legal_terms_acceptation_email_sent';
     case LegalTermsAcceptationUpdated = 'legal_terms_acceptation_updated';
 
+    case MobileAppAuthenticationFactorCreated = 'mobile_app_authentication_factor_created';
+    case MobileAppAuthenticationFactorDestroyed = 'mobile_app_authentication_factor_destroyed';
+    case MobileAppAuthenticationFactorUpdated = 'mobile_app_authentication_factor_updated';
+
     case MollieCredentialCreated = 'mollie_credential_created';
     case MollieCredentialDestroyed = 'mollie_credential_destroyed';
 
     case MoneybirdBankingTransferInitiated = 'moneybird_banking_transfer_initiated';
+    case MoneybirdBankingTransferCompleted = 'moneybird_banking_transfer_completed';
     case MoneybirdBankingTransferFailed = 'moneybird_banking_transfer_failed';
 
     case MultiFactor = 'multi_factor_required';
@@ -240,6 +251,7 @@ enum WebhookEvent: string
     case PaymentRegistered = 'payment_registered';
     case PaymentSendEmail = 'payment_send_email';
     case PaymentMethodEdited = 'payment_method_edited';
+    case PaymentMethodLimitUpdated = 'payment_method_limit_updated';
     case PaymentTransactionAuthorized = 'payment_transaction_authorized';
     case PaymentTransactionAwaitingAuthorization = 'payment_transaction_awaiting_authorization';
     case PaymentTransactionBatchCancelled = 'payment_transaction_batch_cancelled';
@@ -249,6 +261,10 @@ enum WebhookEvent: string
     case PaymentTransactionPending = 'payment_transaction_pending';
     case PaymentTransactionRejected = 'payment_transaction_rejected';
     case PaymentTransactionTechnicallyValidated = 'payment_transaction_technically_validated';
+
+    case PersonalIbanCreated = 'personal_iban_created';
+    case PersonalIbanDestroyed = 'personal_iban_destroyed';
+    case PersonalIbanUpdated = 'personal_iban_updated';
 
     case PontoConnected = 'ponto_connected';
     case PontoDisconnected = 'ponto_disconnected';
@@ -303,6 +319,7 @@ enum WebhookEvent: string
     case SalesInvoiceCreatedBasedOnRecurring = 'sales_invoice_created_based_on_recurring';
     case SalesInvoiceCreatedBasedOnSubscription = 'sales_invoice_created_based_on_subscription';
     case SalesInvoiceCreatedFromCheckoutOrder = 'sales_invoice_created_from_checkout_order';
+    case SalesInvoiceCreatedFromPaymentRequest = 'sales_invoice_created_from_payment_request';
     case SalesInvoiceCreatedFromOriginal = 'sales_invoice_created_from_original';
     case SalesInvoiceDestroyed = 'sales_invoice_destroyed';
     case SalesInvoiceMarkedAsDubious = 'sales_invoice_marked_as_dubious';
@@ -364,16 +381,26 @@ enum WebhookEvent: string
     case SubscriptionTemplateDeactivated = 'subscription_template_deactivated';
     case SubscriptionTemplateUpdated = 'subscription_template_updated';
 
+    case TaskListsListCompleted = 'task_lists_list_completed';
     case TaskListsListCreated = 'task_lists_list_created';
     case TaskListsListDestroyed = 'task_lists_list_destroyed';
+    case TaskListsListReopened = 'task_lists_list_reopened';
     case TaskListsListUpdated = 'task_lists_list_updated';
     case TaskListsListTemplateCreated = 'task_lists_list_template_created';
     case TaskListsListTemplateDestroyed = 'task_lists_list_template_destroyed';
+    case TaskListsListTemplatePublished = 'task_lists_list_template_published';
+    case TaskListsListTemplateHidden = 'task_lists_list_template_hidden';
     case TaskListsListTemplateUpdated = 'task_lists_list_template_updated';
+    case TaskListsTaskAssigned = 'task_lists_task_assigned';
     case TaskListsTaskCompleted = 'task_lists_task_completed';
     case TaskListsTaskCreated = 'task_lists_task_created';
     case TaskListsTaskDestroyed = 'task_lists_task_destroyed';
+    case TaskListsTaskName = 'task_lists_task_name';
     case TaskListsTaskReopened = 'task_lists_task_reopened';
+    case TaskListsTaskReportTypeLinked = 'task_lists_task_report_type_linked';
+    case TaskListsTaskCategoryLinked = 'task_lists_task_category_linked';
+    case TaskListsTaskUnassigned = 'task_lists_task_unassigned';
+    case TaskListsTaskUnlinked = 'task_lists_task_unlinked';
     case TaskListsTaskUpdated = 'task_lists_task_updated';
 
     case TaxRateActivated = 'tax_rate_activated';
