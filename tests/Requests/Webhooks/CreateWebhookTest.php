@@ -29,7 +29,7 @@ test('create webhook request uses POST method', function () {
 test('create webhook request sends correct payload', function () {
     $webhook = Webhook::from([
         'url' => 'https://example.com/webhook',
-        'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
+        'enabled_events' => [WebhookEvent::Contact, WebhookEvent::ContactCreated],
     ]);
 
     $mockClient = new MockClient([
@@ -40,23 +40,30 @@ test('create webhook request sends correct payload', function () {
     $request = new CreateWebhook($webhook);
     $connector->send($request);
 
-    expect($mockClient->getLastPendingRequest()?->body()?->all())
+    $body = $mockClient->getLastPendingRequest()?->body()?->all();
+
+    expect($body)
         ->toHaveKey('url', 'https://example.com/webhook')
-        ->toHaveKey('enabled_events', [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated])
-        ->not->toHaveKey('webhook');
+        ->toHaveKey('enabled_events', [WebhookEvent::Contact, WebhookEvent::ContactCreated])
+        ->not->toHaveKey('webhook')
+        ->and(json_decode(
+            json_encode($body, JSON_THROW_ON_ERROR),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        ))->toHaveKey('enabled_events', ['contact', 'contact_created']);
 });
 
 test('create webhook request returns webhook data', function () {
     $webhook = Webhook::from([
         'url' => 'https://example.com/webhook',
-        'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
+        'enabled_events' => [WebhookEvent::Contact, WebhookEvent::SalesInvoiceCreated],
     ]);
 
     $mockData = [
         'id' => '1',
         'administration_id' => '123456',
         'url' => 'https://example.com/webhook',
-        'enabled_events' => [WebhookEvent::ContactActivated, WebhookEvent::SalesInvoiceCreated],
+        'enabled_events' => ['contact', 'sales_invoice_created'],
         'last_http_status' => null,
         'last_http_body' => null,
         'last_http_response_at' => null,
@@ -77,6 +84,9 @@ test('create webhook request returns webhook data', function () {
     expect($result)->toBeInstanceOf(Webhook::class)
         ->and($result->id)->toBe('1')
         ->and($result->url)->toBe('https://example.com/webhook')
-        ->and($result->enabled_events)->toContain(WebhookEvent::ContactActivated)
         ->and($result->administration_id)->toBe('123456');
+
+    expect($result->enabled_events)
+        ->toBe([WebhookEvent::Contact, WebhookEvent::SalesInvoiceCreated])
+        ->each->toBeInstanceOf(WebhookEvent::class);
 });
