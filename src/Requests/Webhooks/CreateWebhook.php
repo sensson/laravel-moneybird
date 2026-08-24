@@ -29,10 +29,8 @@ class CreateWebhook extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'webhook' => [
-                'url' => $this->webhook->url,
-                'enabled_events' => $this->webhook->enabled_events,
-            ],
+            'url' => $this->webhook->url,
+            'enabled_events' => $this->webhook->enabled_events,
         ];
     }
 
