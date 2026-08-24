@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.6.2 - 2026-08-24
+
+### What's Changed
+
+* fix: support contact webhook events by @ju5t in https://github.com/sensson/laravel-moneybird/pull/27
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.6.1...v0.6.2
+
 ## v0.6.1 - 2026-08-24
 
 ### What's Changed
@@ -61,6 +69,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 
