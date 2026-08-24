@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.6.1 - 2026-08-24
+
+### What's Changed
+
+* fix: send webhook fields at root by @ju5t in https://github.com/sensson/laravel-moneybird/pull/26
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.6.0...v0.6.1
+
 ## v0.6.0 - 2026-08-15
 
 ### What's Changed
@@ -53,6 +61,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 
