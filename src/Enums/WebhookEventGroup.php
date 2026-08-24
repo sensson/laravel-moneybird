@@ -1,0 +1,106 @@
+<?php
+
+namespace Sensson\Moneybird\Enums;
+
+/**
+ * All webhook event groups documented by Moneybird.
+ */
+enum WebhookEventGroup: string
+{
+    case AccessToken = 'access_token';
+    case Administration = 'administration';
+    case AdministrationAutomaticBookers = 'administration_automatic_bookers';
+    case AdministrationDataAnalysisPermission = 'administration_data_analysis_permission';
+    case AdministrationPaymentsWithoutProof = 'administration_payments_without_proof';
+    case Adyen = 'adyen';
+    case AdyenBanking = 'adyen_banking';
+    case AdyenBankingBankTransferPermission = 'adyen_banking_bank_transfer_permission';
+    case AdyenPaymentInstrument = 'adyen_payment_instrument';
+    case AdyenPaymentInstrumentNetworkToken = 'adyen_payment_instrument_network_token';
+    case CompanyAssets = 'company_assets';
+    case CompanyAssetsAsset = 'company_assets_asset';
+    case CompanyAssetsDisposal = 'company_assets_disposal';
+    case CompanyAssetsSource = 'company_assets_source';
+    case CompanyAssetsValueChanges = 'company_assets_value_changes';
+    case CompanyAssetsValueChangesLinear = 'company_assets_value_changes_linear';
+    case CompanyAssetsValueChangesArbitrary = 'company_assets_value_changes_arbitrary';
+    case CompanyAssetsValueChangesDivestment = 'company_assets_value_changes_divestment';
+    case CompanyAssetsValueChangesFullDepreciation = 'company_assets_value_changes_full_depreciation';
+    case CompanyAssetsValueChangesManual = 'company_assets_value_changes_manual';
+    case CompanyAssetsValueChangePlan = 'company_assets_value_change_plan';
+    case BookingRule = 'booking_rule';
+    case Contact = 'contact';
+    case ContactMandateRequest = 'contact_mandate_request';
+    case ContactPerson = 'contact_person';
+    case DefaultIdentity = 'default_identity';
+    case DefaultTaxRate = 'default_tax_rate';
+    case DirectBankLink = 'direct_bank_link';
+    case DirectDebit = 'direct_debit';
+    case DirectDebitIncomingMandate = 'direct_debit_incoming_mandate';
+    case DirectDebitTransaction = 'direct_debit_transaction';
+    case Document = 'document';
+    case DocumentStyle = 'document_style';
+    case EmailDomain = 'email_domain';
+    case Estimate = 'estimate';
+    case EstimateCreatedFrom = 'estimate_created_from';
+    case EstimateMark = 'estimate_mark';
+    case EstimateSend = 'estimate_send';
+    case EstimateStateChanged = 'estimate_state_changed';
+    case ExternalSalesInvoice = 'external_sales_invoice';
+    case ExternalSalesInvoiceMarkedAs = 'external_sales_invoice_marked_as';
+    case ExternalSalesInvoiceStateChanged = 'external_sales_invoice_state_changed';
+    case FeaturePreference = 'feature_preference';
+    case FeedEntry = 'feed_entry';
+    case FinancialAccount = 'financial_account';
+    case FinancialAccountBankLink = 'financial_account_bank_link';
+    case FinancialStatement = 'financial_statement';
+    case Goal = 'goal';
+    case Identity = 'identity';
+    case LedgerAccount = 'ledger_account';
+    case LedgerAccountBooking = 'ledger_account_booking';
+    case LegalTermsAcceptation = 'legal_terms_acceptation';
+    case LegalTermsAcceptationEmail = 'legal_terms_acceptation_email';
+    case MobileAppAuthenticationFactor = 'mobile_app_authentication_factor';
+    case MollieCredential = 'mollie_credential';
+    case MoneybirdBankingTransfer = 'moneybird_banking_transfer';
+    case Note = 'note';
+    case Order = 'order';
+    case Payment = 'payment';
+    case PaymentMethod = 'payment_method';
+    case PaymentTransaction = 'payment_transaction';
+    case PaymentTransactionBatch = 'payment_transaction_batch';
+    case PersonalIban = 'personal_iban';
+    case Ponto = 'ponto';
+    case PontoDirectBankLink = 'ponto_direct_bank_link';
+    case Product = 'product';
+    case Project = 'project';
+    case PurchaseTransaction = 'purchase_transaction';
+    case PurchaseTransactionBatch = 'purchase_transaction_batch';
+    case RecurringSalesInvoice = 'recurring_sales_invoice';
+    case RecurringSalesInvoiceCreatedFrom = 'recurring_sales_invoice_created_from';
+    case SalesInvoice = 'sales_invoice';
+    case SalesInvoiceMarkedAs = 'sales_invoice_marked_as';
+    case SalesInvoiceRevert = 'sales_invoice_revert';
+    case SalesInvoiceSend = 'sales_invoice_send';
+    case SalesInvoiceStateChanged = 'sales_invoice_state_changed';
+    case SendPayment = 'send_payment';
+    case SmartTransfer = 'smart_transfer';
+    case SmartTransferRule = 'smart_transfer_rule';
+    case SmartTransferTrigger = 'smart_transfer_trigger';
+    case Subgoal = 'subgoal';
+    case Subscription = 'subscription';
+    case SubscriptionTemplate = 'subscription_template';
+    case TaskLists = 'task_lists';
+    case TaskListsList = 'task_lists_list';
+    case TaskListsListTemplate = 'task_lists_list_template';
+    case TaskListsTask = 'task_lists_task';
+    case Tax = 'tax';
+    case TaxRate = 'tax_rate';
+    case TimeEntry = 'time_entry';
+    case Todo = 'todo';
+    case UltimateBenificialOwner = 'ultimate_benificial_owner';
+    case UltimateBeneficialOwner = 'ultimate_beneficial_owner';
+    case User = 'user';
+    case Verification = 'verification';
+    case Workflow = 'workflow';
+}
