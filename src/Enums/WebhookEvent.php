@@ -88,6 +88,7 @@ enum WebhookEvent: string
 
     case ChangedIbanSendEmail = 'changed_iban_send_email';
 
+    case Contact = 'contact';
     case ContactIsTrusted = 'contact_is_trusted';
     case ContactIsNotTrusted = 'contact_is_not_trusted';
     case ContactArchived = 'contact_archived';

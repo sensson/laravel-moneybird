@@ -55,3 +55,23 @@ test('list webhooks request returns data collection of webhooks', function () {
         ->and($collection->last()->url)->toBe('https://example.com/webhook2')
         ->and(count($collection->last()->enabled_events))->toBe(2);
 });
+
+test('list webhooks hydrates event groups and known events', function () {
+    $mockClient = new MockClient([
+        ListWebhooks::class => MockResponse::make([
+            [
+                'id' => '1',
+                'administration_id' => '123456',
+                'url' => 'https://example.com/webhook',
+                'enabled_events' => ['contact', 'contact_created'],
+            ],
+        ], 200),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+    $webhook = collect($connector->send(new ListWebhooks)->dto())->first();
+
+    expect($webhook->enabled_events)
+        ->toBe([WebhookEvent::Contact, WebhookEvent::ContactCreated])
+        ->each->toBeInstanceOf(WebhookEvent::class);
+});
