@@ -132,6 +132,17 @@ $updatedContact = Moneybird::administration($administrationId)
     ->update('contact-id', $contact);
 ```
 
+Create a Moneybird Payments mandate URL:
+
+```php
+$mandate = Moneybird::administration($administrationId)
+    ->contacts()
+    ->createMoneybirdPaymentsMandateUrl('contact-id');
+
+$mandate->url;
+$mandate->expires_at;
+```
+
 ### Custom Fields
 
 Get all custom fields:

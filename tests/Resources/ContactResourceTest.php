@@ -5,6 +5,7 @@ use Saloon\Http\Faking\MockResponse;
 use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Requests\Contacts\CreateContact;
+use Sensson\Moneybird\Requests\Contacts\CreateMoneybirdPaymentsMandateUrl;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 use Sensson\Moneybird\Resources\ContactResource;
@@ -50,6 +51,21 @@ test('create() calls the create contact request', function () {
     (new ContactResource($connector))->create(Contact::from([]));
 
     $mockClient->assertSent(CreateContact::class);
+});
+
+test('createMoneybirdPaymentsMandateUrl() calls the create mandate URL request', function () {
+    $mockClient = new MockClient([
+        CreateMoneybirdPaymentsMandateUrl::class => MockResponse::make([
+            'url' => 'https://moneybird.com/mandate/setup/abc123',
+            'expires_at' => '2026-08-25T12:00:00Z',
+        ]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new ContactResource($connector))->createMoneybirdPaymentsMandateUrl('1234');
+
+    $mockClient->assertSent(CreateMoneybirdPaymentsMandateUrl::class);
 });
 
 it('passes query parameters to all()', function () {
