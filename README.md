@@ -143,6 +143,20 @@ $mandate->url;
 $mandate->expires_at;
 ```
 
+Retrieve or delete the stored Moneybird Payments mandate:
+
+```php
+$mandate = Moneybird::administration($administrationId)
+    ->contacts()
+    ->getMoneybirdPaymentsMandate('contact-id');
+
+$mandate->iban;
+
+Moneybird::administration($administrationId)
+    ->contacts()
+    ->deleteMoneybirdPaymentsMandate('contact-id');
+```
+
 ### Custom Fields
 
 Get all custom fields:

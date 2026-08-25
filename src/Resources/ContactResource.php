@@ -7,10 +7,13 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
 use Sensson\Moneybird\Data\Contact;
+use Sensson\Moneybird\Data\MoneybirdPaymentsMandate;
 use Sensson\Moneybird\Data\MoneybirdPaymentsMandateUrl;
 use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\CreateMoneybirdPaymentsMandateUrl;
+use Sensson\Moneybird\Requests\Contacts\DeleteMoneybirdPaymentsMandate;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
+use Sensson\Moneybird\Requests\Contacts\GetMoneybirdPaymentsMandate;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 use Sensson\Moneybird\Requests\Contacts\UpdateContact;
 
@@ -73,5 +76,21 @@ class ContactResource extends BaseResource
     public function createMoneybirdPaymentsMandateUrl(string $contactId): MoneybirdPaymentsMandateUrl
     {
         return $this->connector->send(new CreateMoneybirdPaymentsMandateUrl($contactId))->dtoOrFail();
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function getMoneybirdPaymentsMandate(string $contactId): MoneybirdPaymentsMandate
+    {
+        return $this->connector->send(new GetMoneybirdPaymentsMandate($contactId))->dtoOrFail();
+    }
+
+    /**
+     * @throws RequestException|FatalRequestException
+     */
+    public function deleteMoneybirdPaymentsMandate(string $contactId): void
+    {
+        $this->connector->send(new DeleteMoneybirdPaymentsMandate($contactId));
     }
 }

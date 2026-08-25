@@ -6,7 +6,9 @@ use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\Contact;
 use Sensson\Moneybird\Requests\Contacts\CreateContact;
 use Sensson\Moneybird\Requests\Contacts\CreateMoneybirdPaymentsMandateUrl;
+use Sensson\Moneybird\Requests\Contacts\DeleteMoneybirdPaymentsMandate;
 use Sensson\Moneybird\Requests\Contacts\GetContact;
+use Sensson\Moneybird\Requests\Contacts\GetMoneybirdPaymentsMandate;
 use Sensson\Moneybird\Requests\Contacts\ListContacts;
 use Sensson\Moneybird\Resources\ContactResource;
 
@@ -53,7 +55,7 @@ test('create() calls the create contact request', function () {
     $mockClient->assertSent(CreateContact::class);
 });
 
-test('createMoneybirdPaymentsMandateUrl() calls the create mandate URL request', function () {
+test('create moneybird payments mandate url calls the create mandate url request', function () {
     $mockClient = new MockClient([
         CreateMoneybirdPaymentsMandateUrl::class => MockResponse::make([
             'url' => 'https://moneybird.com/mandate/setup/abc123',
@@ -66,6 +68,30 @@ test('createMoneybirdPaymentsMandateUrl() calls the create mandate URL request',
     (new ContactResource($connector))->createMoneybirdPaymentsMandateUrl('1234');
 
     $mockClient->assertSent(CreateMoneybirdPaymentsMandateUrl::class);
+});
+
+test('get moneybird payments mandate calls the get mandate request', function () {
+    $mockClient = new MockClient([
+        GetMoneybirdPaymentsMandate::class => MockResponse::make([]),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new ContactResource($connector))->getMoneybirdPaymentsMandate('1234');
+
+    $mockClient->assertSent(GetMoneybirdPaymentsMandate::class);
+});
+
+test('delete moneybird payments mandate calls the delete mandate request', function () {
+    $mockClient = new MockClient([
+        DeleteMoneybirdPaymentsMandate::class => MockResponse::make(status: 204),
+    ]);
+
+    $connector = (new MoneybirdConnector)->withMockClient($mockClient);
+
+    (new ContactResource($connector))->deleteMoneybirdPaymentsMandate('1234');
+
+    $mockClient->assertSent(DeleteMoneybirdPaymentsMandate::class);
 });
 
 it('passes query parameters to all()', function () {

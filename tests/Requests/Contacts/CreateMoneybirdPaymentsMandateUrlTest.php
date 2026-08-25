@@ -7,16 +7,16 @@ use Sensson\Moneybird\Connectors\MoneybirdConnector;
 use Sensson\Moneybird\Data\MoneybirdPaymentsMandateUrl;
 use Sensson\Moneybird\Requests\Contacts\CreateMoneybirdPaymentsMandateUrl;
 
-test('create Moneybird Payments mandate URL request has correct endpoint', function () {
+test('create moneybird payments mandate url request has correct endpoint', function () {
     expect((new CreateMoneybirdPaymentsMandateUrl('123456'))->resolveEndpoint())
         ->toBe('contacts/123456/moneybird_payments_mandate/url.json');
 });
 
-test('create Moneybird Payments mandate URL request uses POST method', function () {
+test('create moneybird payments mandate url request uses post method', function () {
     expect((new CreateMoneybirdPaymentsMandateUrl('123456'))->getMethod())->toBe(Method::POST);
 });
 
-test('create Moneybird Payments mandate URL request returns a mandate URL', function () {
+test('create moneybird payments mandate url request returns a mandate url', function () {
     $mockClient = new MockClient([
         CreateMoneybirdPaymentsMandateUrl::class => MockResponse::make([
             'url' => 'https://moneybird.com/mandate/setup/abc123',
