@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.6.4 - 2026-09-25
+
+### What's Changed
+
+* chore: support saloon laravel plugin v5 by @ju5t in https://github.com/sensson/laravel-moneybird/pull/31
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.6.3...v0.6.4
+
 ## v0.6.3 - 2026-08-24
 
 ### What's Changed
@@ -77,6 +85,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 
