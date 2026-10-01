@@ -140,7 +140,6 @@ $mandate = Moneybird::administration($administrationId)
     ->createMoneybirdPaymentsMandateUrl('contact-id');
 
 $mandate->url;
-$mandate->expires_at;
 ```
 
 Retrieve or delete the stored Moneybird Payments mandate:

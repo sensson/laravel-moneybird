@@ -8,7 +8,6 @@ class MoneybirdPaymentsMandateUrl extends Data
 {
     public function __construct(
         public string $url,
-        public string $expires_at,
     ) {
         //
     }

@@ -59,7 +59,6 @@ test('create moneybird payments mandate url calls the create mandate url request
     $mockClient = new MockClient([
         CreateMoneybirdPaymentsMandateUrl::class => MockResponse::make([
             'url' => 'https://moneybird.com/mandate/setup/abc123',
-            'expires_at' => '2026-08-25T12:00:00Z',
         ]),
     ]);
 

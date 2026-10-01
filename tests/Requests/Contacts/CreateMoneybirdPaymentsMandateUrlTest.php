@@ -16,11 +16,16 @@ test('create moneybird payments mandate url request uses post method', function 
     expect((new CreateMoneybirdPaymentsMandateUrl('123456'))->getMethod())->toBe(Method::POST);
 });
 
+test('create moneybird payments mandate url request sends an empty mandate request', function () {
+    $body = json_encode((new CreateMoneybirdPaymentsMandateUrl('123456'))->body()->all());
+
+    expect($body)->toBe('{"mandate_request":{}}');
+});
+
 test('create moneybird payments mandate url request returns a mandate url', function () {
     $mockClient = new MockClient([
         CreateMoneybirdPaymentsMandateUrl::class => MockResponse::make([
             'url' => 'https://moneybird.com/mandate/setup/abc123',
-            'expires_at' => '2026-08-25T12:00:00Z',
         ]),
     ]);
 
@@ -28,6 +33,5 @@ test('create moneybird payments mandate url request returns a mandate url', func
     $result = $connector->send(new CreateMoneybirdPaymentsMandateUrl('123456'))->dto();
 
     expect($result)->toBeInstanceOf(MoneybirdPaymentsMandateUrl::class)
-        ->and($result->url)->toBe('https://moneybird.com/mandate/setup/abc123')
-        ->and($result->expires_at)->toBe('2026-08-25T12:00:00Z');
+        ->and($result->url)->toBe('https://moneybird.com/mandate/setup/abc123');
 });
