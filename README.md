@@ -132,6 +132,30 @@ $updatedContact = Moneybird::administration($administrationId)
     ->update('contact-id', $contact);
 ```
 
+Create a Moneybird Payments mandate URL:
+
+```php
+$mandate = Moneybird::administration($administrationId)
+    ->contacts()
+    ->createMoneybirdPaymentsMandateUrl('contact-id');
+
+$mandate->url;
+```
+
+Retrieve or delete the stored Moneybird Payments mandate:
+
+```php
+$mandate = Moneybird::administration($administrationId)
+    ->contacts()
+    ->getMoneybirdPaymentsMandate('contact-id');
+
+$mandate->iban;
+
+Moneybird::administration($administrationId)
+    ->contacts()
+    ->deleteMoneybirdPaymentsMandate('contact-id');
+```
+
 ### Custom Fields
 
 Get all custom fields:
