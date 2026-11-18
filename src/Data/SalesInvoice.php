@@ -68,4 +68,44 @@ class SalesInvoice extends Data
         public ?array $events = null,
         public ?array $tax_totals = [],
     ) {}
+
+    public function isDraft(): bool
+    {
+        return $this->state === 'draft';
+    }
+
+    public function isScheduled(): bool
+    {
+        return $this->state === 'scheduled';
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->state === 'open';
+    }
+
+    public function isPendingPayment(): bool
+    {
+        return $this->state === 'pending_payment';
+    }
+
+    public function isReminded(): bool
+    {
+        return $this->state === 'reminded';
+    }
+
+    public function isLate(): bool
+    {
+        return $this->state === 'late';
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->state === 'paid';
+    }
+
+    public function isUncollectible(): bool
+    {
+        return $this->state === 'uncollectible';
+    }
 }
