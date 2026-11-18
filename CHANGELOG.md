@@ -8,6 +8,10 @@ All notable changes to `laravel-moneybird` will be documented in this file.
 
 * feat: add state helpers to sales invoice by @ju5t in https://github.com/sensson/laravel-moneybird/pull/32
 
+### BREAKING CHANGES
+
+* Laravel 11 is no longer supported. The package now requires Laravel 12 or 13.
+
 **Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.7.0...v0.8.0
 
 ## v0.7.0 - 2026-10-01
