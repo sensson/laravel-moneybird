@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-moneybird` will be documented in this file.
 
+## v0.8.0 - 2026-11-18
+
+### What's Changed
+
+* feat: add state helpers to sales invoice by @ju5t in https://github.com/sensson/laravel-moneybird/pull/32
+
+**Full Changelog**: https://github.com/sensson/laravel-moneybird/compare/v0.7.0...v0.8.0
+
 ## v0.7.0 - 2026-10-01
 
 ### What's Changed
@@ -93,6 +101,7 @@ foreach (User::query()->whereNotNull('moneybird_auth')->cursor() as $user) {
     $user->moneybird_auth = $user->moneybird_auth;
     $user->save();
 }
+
 
 
 
